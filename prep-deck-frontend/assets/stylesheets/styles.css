@@ -1,6 +1,6 @@
 *, *::before, *::after {
     box-sizing: border-box;
-    font-family: Gotham Rounded;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 body {
@@ -15,6 +15,11 @@ body {
   
     
 }
+
+hr {
+    border: 1px solid #464343;
+    margin-bottom: 25px;
+  }
 
 .sign-in {
     display: inline-block;
@@ -54,18 +59,18 @@ body.wrong {
 }
 
 .btn {
-    border: 1px solid hsl(var(--hue), 100%, 30%);
-    background-color: hsl(var(--hue), 100%, 50%);
-    border-radius: 5px;
-    padding: 5px 10px;
-    color: white; 
-    outline: none;
+   background-color: #4CAF50;
+   color: white;
+   padding: 14px 20px;
+   margin: 8px 0;
+   border: none;
+   cursor: pointer;
+   width: 100%;
+   opacity: 0.9;
+   
 
 }
 
-.btn:hover {
-    border-color: violet;
-}
 
 .btn.correct {
    
@@ -93,3 +98,19 @@ body.wrong {
     display: none;
 }
 
+.container {
+    padding: 16px;
+}
+
+input[type=text], input[type=password] {
+    width: 100%;
+    padding: 15px;
+    margin: 5px 0 22px 0;
+    display: inline-block;
+    border: none;
+    background: #f1f1f1;
+}
+
+button:hover {
+    opacity:1;
+}
