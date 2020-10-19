@@ -67,7 +67,6 @@ body.wrong {
    cursor: pointer;
    width: 100%;
    opacity: 0.9;
-   
 
 }
 
@@ -114,3 +113,53 @@ input[type=text], input[type=password] {
 button:hover {
     opacity:1;
 }
+
+.top-area {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 40px 0;
+  }
+  .top-area:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+  .top-area li a {
+    display: block;
+    text-decoration: none;
+    padding: 15px;
+    background: rgba(160, 179, 176, 0.25);
+    color: #a0b3b0;
+    font-size: 20px;
+    float: left;
+    width: 50%;
+    text-align: center;
+    cursor: pointer;
+    transition: .5s ease;
+  }
+  .top-area li a:hover {
+    background: #0080ff;
+    color: #ffffff;
+  }
+  .top-area .active a {
+    background: #1da1f2;
+    color: #ffffff;
+  }
+   
+  .tab-content > div:last-child {
+    display: none;
+  }
+
+  .top-row:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+  .top-row > div {
+    float: left;
+    width: 48%;
+    margin-right: 4%;
+  }
+  .top-row > div:last-child {
+    margin: 0;
+  }

@@ -6,12 +6,19 @@
     <title>Prep Deck</title>
   </head>
   <body>
+    
     <div class="container">
+      <ul class="top-area">
+        <li class="tab active"><a href="#signup">Sign Up</a></li>
+        <li class="tab"><a href="#login">Log In</a></li>
+      </ul>
+      
+      <div class="tab-content">
       <div id="signup">
-        <h1>Sign Up</h1>
-        <p>Please fill in this form to create an account.</p>
-        <hr>
         <form class="form" id="myForm">
+          <h1>Sign Up</h1>
+          <p>Please fill in this form to create an account.</p>
+          <hr>
           <div class="sign-up">
           <input type="text" name="user[firstName]" id="user-firstName" placeholder="First Name" required="required">
           <input type="text" name="user[lastName]" id="user-lastName" placeholder="Last Name" required="required">
@@ -20,6 +27,21 @@
           <input class="submit" type="submit" value="Sign Up">
         </form>
       </div>
+    </div>
+
+      <div id="login">
+        <form class="form" id="myLoginForm">
+          <h1>Login</h1>
+          <hr>
+          <div class="login">
+          <input type="text" name="user[email]" id="user-email" placeholder="Email" required="required">
+          <input type="password" name="user[password]" id="user-password" placeholder="Password" required="required">
+          <input class="submit" type="submit" value="Log In">
+        </form>
+      </div>
+    </div>
+  </div>
+
       <div id="question-container" class="hide" >
           <div id="question">Question</div>
           <div id="answer-buttons" class="btn-grid">

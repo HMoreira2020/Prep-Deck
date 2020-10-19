@@ -33,6 +33,53 @@ myForm.addEventListener('submit', function(e) {
         .then(json => console.log(json))
 
 })
+
+
+
+const lis = document.querySelectorAll("li.tab")
+const tabContent = document.querySelector('.tab-content')
+//helper method to get sibling elements
+let getSiblings = function(elem){
+  let siblings = []
+  if(!elem.parentNode) {
+    return siblings
+  }
+  let sibling = elem.parentNode.firstChild;
+  while(sibling) {
+    if (sibling.nodeType === 1 && sibling !== elem) {
+			siblings.push(sibling);
+    }
+    sibling = sibling.nextSibling
+  }
+  return siblings;
+}
+
+lis.forEach(li => {
+  
+  li.addEventListener('click', function(e) {
+    e.preventDefault();
+    let siblings = getSiblings(li)
+    console.log(e.target.href.split('#')[1])
+    console.log(siblings)
+    this.classList.add('active')
+    siblings[0].classList.remove('active')
+  
+    targetId = e.target.href.split('#')[1];
+    
+    [...tabContent.children].forEach(child => {
+      console.log(child)
+      if (child.id !== targetId) {
+          child.style.display = "none"
+      } else {
+        child.style.display = "block"
+      }
+
+    })
+  
+  // $(target).fadeIn(600);
+  
+  })
+})
         // .then(function(newUserObj) {
         //     console.log(newUserObj)
         //     let newUserP = document.createElement('para')
