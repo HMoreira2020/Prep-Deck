@@ -5,6 +5,7 @@ class UsersController < ApplicationController
     end 
 
     def create 
+        #for some reason password does not show up in whitelisted user_params, only params so I couldn't do User.new(user_params)
         user = User.new(first_name: user_params[:first_name], last_name: user_params[:last_name], email: user_params[:email], password: params[:password])
         if user.save 
             session[:user_id] = user.id
