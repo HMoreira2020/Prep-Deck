@@ -10,10 +10,26 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_17_163719) do
+ActiveRecord::Schema.define(version: 2020_10_21_000231) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "decks", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "questions", force: :cascade do |t|
+    t.string "content"
+    t.string "choice_a"
+    t.string "choice_b"
+    t.string "choice_c"
+    t.string "choice_d"
+    t.string "correct_answer"
+    t.string "topic"
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "first_name"

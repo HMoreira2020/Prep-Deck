@@ -1,10 +1,6 @@
 class ApplicationController < ActionController::API
-    protect_from_forgery with: :exception
-    helper_method :current_user, :logged_in?, :require_login, :admin?
-    before_action :require_login
 
   private
-
 
   def logged_in? 
     current_user != nil 

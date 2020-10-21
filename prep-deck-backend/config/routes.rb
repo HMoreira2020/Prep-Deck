@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :decks
+  resources :questions
   resources :users
   post '/login', to: 'sessions#create'
   get '/logout', to: 'sessions#destroy'

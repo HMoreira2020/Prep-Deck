@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  content: MyString
+  choices: MyString
+  topic: MyString
+  correct_answer: MyString
+  deck_id: MyString
+
+two:
+  content: MyString
+  choices: MyString
+  topic: MyString
+  correct_answer: MyString
+  deck_id: MyString
