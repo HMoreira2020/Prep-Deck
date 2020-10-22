@@ -6,8 +6,11 @@
     <title>Prep Deck</title>
   </head>
   <body>
-    
+   
     <div class="container">
+      <h1>Prep Deck</h1>
+      <div id="user-display">
+      </div>
       <ul class="top-area">
         <li class="tab active"><a href="#signup">Sign Up</a></li>
         <li class="tab"><a href="#login">Log In</a></li>
@@ -16,7 +19,7 @@
       <div class="tab-content">
       <div id="signup">
         <form class="form" id="myForm">
-          <h1>Sign Up</h1>
+          <h2>Sign Up</h2>
           <p>Please fill in this form to create an account.</p>
           <hr>
           <div class="sign-up">
@@ -31,11 +34,11 @@
 
       <div id="login">
         <form class="form" id="myLoginForm">
-          <h1>Login</h1>
+          <h2>Login</h2>
           <hr>
           <div class="login">
-          <input type="text" name="user[email]" id="user-email" placeholder="Email" required="required">
-          <input type="password" name="user[password]" id="user-password" placeholder="Password" required="required">
+          <input type="text" name="user[email]" id="login-email" placeholder="Email" required="required">
+          <input type="password" name="user[password]" id="login-password" placeholder="Password" required="required">
           <input class="submit" type="submit" value="Log In">
         </form>
       </div>
@@ -43,6 +46,7 @@
   </div>
 
       <div id="question-container" class="hide" >
+        <div id="home" class="flex-center flex-column">
           <div id="question">Question</div>
           <div id="answer-buttons" class="btn-grid">
             <button class="btn">Answer 1</button>
@@ -50,10 +54,17 @@
             <button class="btn">Answer 3</button>
             <button class="btn">Answer 4</button>
           </div>
+          <div class="add-remove-controls">
+            <a class="btn" href="">Add to Your Deck</a>
+            <a class="btn" href="">Remove from Your Deck</a>
+          </div>
+        </div>
       </div>
         <div class="controls">
           <button id="start-btn" class="start-btn btn hide">Start Interview Prep</button>
           <button id="next-btn" class="next-btn btn hide">Next</button>
+        
+
         </div>
     </div>
    <script type="application/javascript" src="src/index.js" charset="UTF-8"></script>
