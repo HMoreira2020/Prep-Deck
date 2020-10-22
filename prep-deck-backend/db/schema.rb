@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_22_194204) do
+ActiveRecord::Schema.define(version: 2020_10_22_203341) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -36,10 +36,8 @@ ActiveRecord::Schema.define(version: 2020_10_22_194204) do
     t.string "choice_d"
     t.string "correct_answer"
     t.string "topic"
-    t.bigint "deck_id"
     t.string "content_2"
     t.string "explanation"
-    t.index ["deck_id"], name: "index_questions_on_deck_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -52,5 +50,4 @@ ActiveRecord::Schema.define(version: 2020_10_22_194204) do
   end
 
   add_foreign_key "decks", "users"
-  add_foreign_key "questions", "decks"
 end

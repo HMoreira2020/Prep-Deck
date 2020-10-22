@@ -32,9 +32,7 @@ Question.create!(
         },
         {
             content: "What will be the output of the following code ?" ,
-            content_2: "var package;
-            console.log('Package: ' + package)
-            console.log('Amount: ' + amount);",
+            content_2: "var package; console.log('Package: ' + package) console.log('Amount: ' + amount);",
             choice_a: "Package: null; Amount: null",
             choice_b: "Package: undefined; Amount: undefined",
             choice_c: "Package: null; A ReferenceError is thrown saying amount is not defined",
@@ -44,16 +42,7 @@ Question.create!(
         },
         {
             content:"What will be the output of the following code ?" ,
-            content_2: "var i=true; var j=false; var k=true;
-            if( i || J && K){
-            a=10;
-            b='True';
-            }
-            else {
-            a=20;
-            b='False';
-            }
-            console.log(a+','+b);",
+            content_2: "var i=true; var j=false; var k=true; if( i || J && K){a=10;b='True';} else {a=20; b='False';} console.log(a+','+b);",
             choice_a: "10,True",
             choice_b: "10,False",
             choice_c: "20,True",
@@ -92,10 +81,7 @@ Question.create!(
         },
         {
             content:"What will the following JavaScript code snippet do? If not, what will be the error?" ,
-            content_2: "function letsfindcourse(lfc) { 
-                for (; lfc.next; lfc = lfc.next) ; 
-                return lfc; 
-                }",
+            content_2: "function letsfindcourse(lfc) { for (; lfc.next; lfc = lfc.next) ; return lfc; }",
             choice_a: "No, this will result in a runtime error with the message 'Cannot use Linked List'",
             choice_b: "No, this will not iterate",
             choice_c: "Yes, this will work",
@@ -106,9 +92,7 @@ Question.create!(
         },
         {
             content:"What will be the output of the following JavaScript code?" ,
-            content_2: "let x=0;
-            for(x; x<10; x++);
-            console.log(x);",
+            content_2: "let x=0; for(x; x<10; x++); console.log(x);",
             choice_a: "0",
             choice_b: "9",
             choice_c: "10",

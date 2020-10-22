@@ -10,8 +10,7 @@ class UsersController < ApplicationController
         if user.save 
             session[:user_id] = user.id
             render json: user 
-        else 
-            render json: {error: 'failed to create user'}
+        end
     end 
 
     private
