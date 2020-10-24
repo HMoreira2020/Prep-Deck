@@ -1,6 +1,8 @@
 const userDisplayDiv = document.getElementById('user-display')
 const startButton = document.getElementById('start-btn')
 const nextButton = document.getElementById('next-btn')
+const addButton = document.getElementById('add-btn')
+const removeButton = document.getElementById('remove-btn')
 const topArea = document.querySelector('ul.top-area')
 
 
@@ -186,7 +188,6 @@ choices.forEach(choice => {
          
       })
       
-     
       // console.log(selectedAnswer)
       // console.log(e.target.previousElementSibling.innerHTML)
       // console.log(answerPrefix === currentQuestion.correct_answer)
@@ -203,6 +204,9 @@ startButton.addEventListener('click', function(e) {
   e.target.classList.add('hide')
   game.classList.remove('hide')
   nextButton.classList.remove('hide')
+  addButton.classList.remove('hide')
+  removeButton.classList.remove('hide')
+  
   startGame();
   // load questions into cards here 
 })
