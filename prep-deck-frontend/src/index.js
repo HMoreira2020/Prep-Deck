@@ -2,6 +2,7 @@ const userDisplayDiv = document.getElementById('user-display')
 const startButton = document.getElementById('start-btn')
 const topArea = document.querySelector('ul.top-area')
 const questionContainer = document.getElementById('question-container')
+const game = document.getElementById('game')
 // test that we can get data from the backend
 const BACKEND_URL = 'http:localhost:3000';
 fetch(`${BACKEND_URL}/users`)
@@ -129,9 +130,17 @@ myLoginForm.addEventListener('submit', function(e) {
 })
 
 
+// on clicking on start startButton, game begins with first question displayed. rename game id later 
+startButton.addEventListener('click', function(e) {
+  e.preventDefault();
+  e.target.classList.add('hide')
+  game.classList.remove('hide')
+  // load questions into cards here 
+})
 
-    
-        
+
+
+
     
       
     

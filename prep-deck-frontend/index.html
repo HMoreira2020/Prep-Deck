@@ -45,28 +45,37 @@
     </div>
   </div>
 
-      <div id="question-container" class="hide" >
-        <div id="home" class="flex-center flex-column">
-          <div id="question">Question</div>
-          <div id="answer-buttons" class="btn-grid">
-            <button class="btn">Answer 1</button>
-            <button class="btn">Answer 2</button>
-            <button class="btn">Answer 3</button>
-            <button class="btn">Answer 4</button>
+      
+        <div id="game" class="justify-center flex-column hide">
+          <h2 id="quesiton">What is the answer to this questions?</h2>
+          <div class="choice-container">
+            <p class="choice-prefix">A</p>
+            <p class="choice-text">Choice 1</p>
           </div>
-          <div class="add-remove-controls">
-            <a class="btn" href="">Add to Your Deck</a>
-            <a class="btn" href="">Remove from Your Deck</a>
+          <div class="choice-container">
+            <p class="choice-prefix">B</p>
+            <p class="choice-text">Choice 2</p>
+          </div>
+          <div class="choice-container">
+            <p class="choice-prefix">C</p>
+            <p class="choice-text">Choice 3</p>
+          </div>
+          <div class="choice-container">
+            <p class="choice-prefix">D</p>
+            <p class="choice-text">Choice 4</p>
           </div>
         </div>
-      </div>
+        <div class="add-remove-controls">
+          <button id="add-btn" class="add-btn btn hide">Add to Your Deck</a>
+          <button id="remove-btn" class="remove-btn btn hide">Remove from Your Deck</a>
+        </div>
         <div class="controls">
           <button id="start-btn" class="start-btn btn hide">Start Interview Prep</button>
           <button id="next-btn" class="next-btn btn hide">Next</button>
-        
-
         </div>
+
     </div>
+
    <script type="application/javascript" src="src/index.js" charset="UTF-8"></script>
   </body>
 </html>

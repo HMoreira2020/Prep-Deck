@@ -51,7 +51,7 @@ Question.create!(
             topic: "Javascript Fundamentals" 
         },
         {
-            content:"The statement is an example of:" ,
+            content:"The following statement is an example of:" ,
             content_2: "while (3==3) {}",
             choice_a: "A typographical error",
             choice_b: "An infinite loop",
