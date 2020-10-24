@@ -59,9 +59,9 @@ myForm.addEventListener('submit', function(e) {
           myForm.style.display = "none"
           topArea.classList.add("hide")
           startButton.classList.remove("hide")
-          let newUserP = document.createElement('para')
-          newUserP.innerText = `Hello, ${json.first_name}`
-          userDisplayDiv.append(newUserP)
+          // let newUserP = document.createElement('para')
+          // newUserP.innerText = `Hello, ${json.first_name}`
+          // userDisplayDiv.append(newUserP)
           
         })
 
@@ -182,7 +182,6 @@ choices.forEach(choice => {
       selectedAnswer.parentElement.classList.add(answerClass)
 
       nextButton.addEventListener('click', function(e) {
-        e.preventDefault();
         selectedAnswer.parentElement.classList.remove(answerClass)
         getNewQuestion()
          
