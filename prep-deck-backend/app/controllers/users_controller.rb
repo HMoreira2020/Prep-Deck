@@ -1,4 +1,6 @@
 class UsersController < ApplicationController
+    skip_before_action :authorized, only: [:create]
+    
     def index 
         users = User.all 
         render json: users
@@ -9,8 +11,10 @@ class UsersController < ApplicationController
         user = User.new(first_name: user_params[:first_name], last_name: user_params[:last_name], email: user_params[:email], password: params[:password])
         user.decks.build(name: "#{user.first_name}'s deck")
         if user.save 
-            session[:user_id] = user.id
-            render json: user 
+            @token = encode_token(user_id: @user.id)
+            render json: user, jwt: @token, status: :created
+        else
+            render json: { error: 'failed to create user' }, status: :not_acceptable
         end
     end 
 

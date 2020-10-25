@@ -1,16 +1,14 @@
 class SessionsController < ApplicationController
+    skip_before_action :authorized, only: [:create] 
+
     def create 
         user = User.find_by(email: params[:email])
         if user && user.authenticate(params[:password])
-            session[:user_id] = user.id
-            render json: user 
-        else 
-            flash[:error] = "Login is incorrect"
-            #how do alerts work in this app 
-            #is redirection necessary 
-            #why when I reload the page does it end the session? 
-            redirect_to root_path 
-        end 
+            token = encode_token({ user_id: @user.id })
+            render json: user, jwt: token, status: :accepted
+        else
+            render json: { message: 'Invalid username or password' }, status: :unauthorized
+        end
     end 
 
     def destroy
@@ -18,6 +16,9 @@ class SessionsController < ApplicationController
         redirect_to root_path 
     end 
 
+    def user_params
+        params.require(:user).permit(:email, :password)
+    end
     
     
 end 

@@ -1,24 +1,39 @@
 class ApplicationController < ActionController::API
+  def encode_token(payload)
+    JWT.encode(payload, 'my_s3cr3t')
+  end 
 
-  private
+  def auth_header 
+    request.headers['Authorization']
+  end 
 
-  def logged_in? 
-    current_user != nil 
+  def decoded_token(token)
+    if auth_header
+      token = auth_header.split(' ')[1] 
+      begin 
+        JWT.decode(token, 'my_s3cr3t', true, algorithim: 'HS256')
+      rescue JWT::DecodeError
+        nil 
+      end 
+    end 
   end 
 
   def current_user
-    @current_user ||= User.find(session[:user_id]) if session[:user_id]
+    if decoded_token
+      # decoded_token=> [{"user_id"=>2}, {"alg"=>"HS256"}]
+      # or nil if we can't decode the token
+      user_id = decoded_token[0]['user_id']
+      @user = User.find_by(id: user_id)
+    end
   end
- 
 
-#   def require_login
-#     redirect_to root_path unless logged_in? 
-#   end 
+  def logged_in?
+    !!current_user
+  end
 
-#   def user_not_authorized
-#     flash[:warning] = "You are not authorized to perform this action."
-#     redirect_to(request.referrer || root_path)
-#   end
+  def authorized
+    render json: { message: 'Please log in' }, status: :unauthorized unless logged_in?
+  end
 
 end
 
