@@ -18,7 +18,9 @@ body {
 div.container h1 {
 justify-content: center;
 text-align: center;
+color: #0080ff;
 }
+
 
 hr {
   border: 1px solid #464343;
@@ -51,12 +53,16 @@ body.wrong {
   max-width: 60%;
   background-color: whitesmoke;
   border-radius: 5px;
-  padding: 0px 16px 0px;
+  padding: 16px;
   box-shadow: 0 0 10px 2px;
   
 }
 
-#user-display {
+#user-display p {
+
+  
+ 
+
 
 }
 
@@ -72,6 +78,13 @@ body.wrong {
  cursor: pointer;
  width: 80%;
  opacity: 0.9;
+}
+
+.btn:hover {
+  cursor: pointer;
+  box-shadow: 0 0.4rem 1.4rem 0 rgba(86, 185, 235, 0.5);
+  transform: translateY(-0.1rem);
+  transition: transform 150ms;
 }
 
 .btn[disabled]:hover {
@@ -97,6 +110,7 @@ body.wrong {
   font-weight: bold;
   width: 60%;
   margin: 5px;
+  background-color: #0080ff;
 }
 
 .controls {

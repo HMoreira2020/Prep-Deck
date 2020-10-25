@@ -15,6 +15,8 @@ let acceptingAnswers = false;
 let questionCounter = 0
 let availableQuestions = []
 let questions;
+let answerClass;
+
 
 
 // test that we can get data from the backend
@@ -30,6 +32,7 @@ fetch(`${BACKEND_URL}/questions`)
   console.log(parsedResponse)
   questions = parsedResponse
 });
+
 
 //event listener on signup form to send data to users#create and create user
 //also hides sign in form and displays main prep deck 
@@ -59,9 +62,9 @@ myForm.addEventListener('submit', function(e) {
           myForm.style.display = "none"
           topArea.classList.add("hide")
           startButton.classList.remove("hide")
-          // let newUserP = document.createElement('para')
-          // newUserP.innerText = `Hello, ${json.first_name}`
-          // userDisplayDiv.append(newUserP)
+          let newUserP = document.createElement('p')
+          newUserP.innerText = `Hello, ${json.first_name}`
+          userDisplayDiv.append(newUserP)
           
         })
 
@@ -125,18 +128,19 @@ myLoginForm.addEventListener('submit', function(e) {
         method: 'POST',
         headers: {
           'Accept': 'application/json',
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json', 
         },
           body: JSON.stringify(formData)
         })
         .then(response => response.json())
         .then(json => {
           console.log(json)
-          //refactor with helper method for code below that occurs in signup and login
           myLoginForm.style.display = "none"
           topArea.classList.add("hide")
           startButton.classList.remove("hide")
-          let newUserP = document.createElement('para')
+          // localStorage.setItem("token", json.jwt)
+          // loginUser(user_json)
+          let newUserP = document.createElement('p')
           newUserP.innerText = `Hello, ${json.first_name}`
           userDisplayDiv.append(newUserP)
 
@@ -144,6 +148,7 @@ myLoginForm.addEventListener('submit', function(e) {
 
 })
 
+// Going through the deck of questions 
 startGame = () => {
   // questionCounter = 0; don't need this unless you set a MAX_QUESTIONS 
   getNewQuestion()
@@ -151,6 +156,7 @@ startGame = () => {
 
 getNewQuestion = () => {
   if (questions.length > 0) {
+    
     // questionCounter ++ 
     const questionIndex = Math.floor(Math.random() * questions.length)
     currentQuestion = questions[questionIndex]
@@ -175,24 +181,26 @@ choices.forEach(choice => {
       const selectedAnswer = e.target 
       const answerPrefix = selectedAnswer.previousElementSibling.innerHTML
 
-      const answerClass = answerPrefix === currentQuestion.correct_answer ? "correct" : "incorrect"
+      answerClass = answerPrefix === currentQuestion.correct_answer ? "correct" : "incorrect"
       //define which class to apply if user selects correct or incorrect answer 
 
       //apply the class
       selectedAnswer.parentElement.classList.add(answerClass)
 
-      nextButton.addEventListener('click', function(e) {
-        selectedAnswer.parentElement.classList.remove(answerClass)
-        getNewQuestion()
-         
-      })
       
-      // console.log(selectedAnswer)
-      // console.log(e.target.previousElementSibling.innerHTML)
-      // console.log(answerPrefix === currentQuestion.correct_answer)
-     
+      console.log(selectedAnswer)
+      console.log(e.target.previousElementSibling.innerHTML)
+      console.log(answerPrefix === currentQuestion.correct_answer)
+      console.log(questions.length)
+      
     }
   })
+})
+
+nextButton.addEventListener('click', function(e) {
+  choices.forEach(choice => choice.parentElement.classList.remove(answerClass))
+  getNewQuestion()
+   
 })
 
 
