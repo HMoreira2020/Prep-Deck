@@ -1,17 +1,21 @@
 class UsersController < ApplicationController
     skip_before_action :authorized, only: [:create]
-    
+
     def index 
         users = User.all 
         render json: users
     end 
+
+    def show
+        render json: { user: current_user, status: :accepted }
+    end
 
     def create 
         #for some reason password does not show up in whitelisted user_params, only params so I couldn't do User.new(user_params)
         user = User.new(first_name: user_params[:first_name], last_name: user_params[:last_name], email: user_params[:email], password: params[:password])
         user.decks.build(name: "#{user.first_name}'s deck")
         if user.save 
-            @token = encode_token(user_id: @user.id)
+            @token = encode_token(user_id: @user.id) #this arg is the 'payload' that we use to set the current_user 
             render json: user, jwt: @token, status: :created
         else
             render json: { error: 'failed to create user' }, status: :not_acceptable
