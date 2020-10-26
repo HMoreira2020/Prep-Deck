@@ -3,17 +3,19 @@ class UsersController < ApplicationController
 
     def index 
         users = User.all 
-        render json: users
+        render json: UserSerializer.new(users).to_serialized_json
     end 
 
     def create 
         #for some reason password does not show up in whitelisted user_params, only params so I couldn't do User.new(user_params)
-        @user = User.new(first_name: user_params[:first_name], last_name: user_params[:last_name], email: user_params[:email], password: params[:password])
-        user.decks.build(name: "#{@user.first_name}'s deck")
+        user = User.new(first_name: user_params[:first_name], last_name: user_params[:last_name], email: user_params[:email], password: params[:password])
+        user.decks.build(name: "#{user.first_name}'s deck")
         if @user.save 
             # @token = encode_token(user_id: @user.id) #this arg is the 'payload' that we use to set the current_user 
             # render json: {@user, jwt: @token}, status: :created
-            render json: @user, status: :created
+            render json: UserSerializer.new(user).to_serialized_json, status: :created 
+            #possible render with user decks to grab on front end 
+            #add deck_id value to the value of add button 
         else
             render json: { error: 'failed to create user' }, status: :not_acceptable
         end
