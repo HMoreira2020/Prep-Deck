@@ -7,7 +7,7 @@ const topArea = document.querySelector('ul.top-area')
 
 
 
-const game = document.getElementById('game')
+const deck = document.getElementById('deck')
 const questionDiv = document.getElementById('question')
 const questionContent2 = document.getElementById('question-content-2')
 const choices = Array.from(document.getElementsByClassName("choice-text"))
@@ -159,7 +159,7 @@ myLoginForm.addEventListener('submit', function(e) {
 
 
 // Going through the deck of questions 
-startGame = () => {
+startDeck = () => {
   // questionCounter = 0; don't need this unless you set a MAX_QUESTIONS 
   getNewQuestion()
 }
@@ -220,12 +220,12 @@ nextButton.addEventListener('click', function(e) {
 startButton.addEventListener('click', function(e) {
   e.preventDefault();
   e.target.classList.add('hide')
-  game.classList.remove('hide')
+  deck.classList.remove('hide')
   nextButton.classList.remove('hide')
   addButton.classList.remove('hide')
   removeButton.classList.remove('hide')
   
-  startGame();
+  startDeck();
   // load questions into cards here 
 })
 
