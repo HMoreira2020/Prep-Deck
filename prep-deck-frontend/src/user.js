@@ -17,6 +17,10 @@ class User {
         addButton.innerHTML = `Add to ${this.first_name}'s Deck`
         userDisplayDiv.append(newUserP)
     }
+
+    static findById(id) {
+        return this.all.find(user => user.id === id)
+      }
       
 }
 

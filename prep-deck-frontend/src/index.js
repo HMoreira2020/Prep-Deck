@@ -171,6 +171,7 @@ function fetchQuestions(url) {
         let newQuestion = new Question(resp)
         // console.log(Question.all)
         questions = Question.all 
+        //questions = [...Question.all] - better to do this?
         //questions is set using Question.all from class 
       })
     });

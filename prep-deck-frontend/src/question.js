@@ -24,6 +24,10 @@ class Question {
         choice.innerText = this["choice_" + letter]
       })
     }
+
+    static findById(id) {
+      return this.all.find(question => question.id === id)
+    }
       
 }
 
