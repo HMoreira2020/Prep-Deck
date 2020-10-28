@@ -33,7 +33,13 @@ fetch(`${BACKEND_URL}/questions`)
 .then(response => response.json())
 .then(parsedResponse => {
   console.log(parsedResponse)
-  questions = parsedResponse
+  parsedResponse.forEach(resp => {
+    debugger
+    let newQuestion = new Question(resp)
+    console.log(resp)
+  })
+  // questions = parsedResponse
+
 });
 
 // handles signup/login
