@@ -11,5 +11,9 @@ class Question {
         this.decks = data.decks 
         this.explanation = data.explanation 
         this.topic = data.topic 
+        Question.all.push(this)
     }
 }
+
+Question.all = [] 
+
