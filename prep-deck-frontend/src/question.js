@@ -16,14 +16,13 @@ class Question {
 
     
     render() {
-        debugger
-          questionDiv.innerText = this.content
-          questionContent2.innerText = this.content_2
+      questionDiv.innerText = this.content
+      questionContent2.innerText = this.content_2
       
-          choices.forEach(choice => {
-            let letter = choice.dataset["letter"]
-            choice.innerText = this["choice_" + letter]
-          })
+      choices.forEach(choice => {
+        let letter = choice.dataset["letter"]
+        choice.innerText = this["choice_" + letter]
+      })
     }
       
 }

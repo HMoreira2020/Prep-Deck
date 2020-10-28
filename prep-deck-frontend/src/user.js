@@ -1,6 +1,5 @@
 class User {
     constructor(data) {
-        debugger
         this.id = data.id 
         this.first_name = data.first_name 
         this.last_name = data.last_name 
@@ -12,7 +11,6 @@ class User {
 
     
     renderUser() {
-        debugger
         let newUserP = document.createElement('p')
         newUserP.innerText = `Hello, ${this.first_name}`
         addButton.dataset["id"] = this.deck_id
