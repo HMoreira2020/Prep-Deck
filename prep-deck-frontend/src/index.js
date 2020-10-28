@@ -17,49 +17,23 @@ let questionCounter = 0
 let availableQuestions = []
 let questions;
 let answerClass;
-let user_deck_id;
-let user_deck_name;
-
 
 
 // test that we can get data from the backend
 const BACKEND_URL = 'http:localhost:3000';
-fetch(`${BACKEND_URL}/users`)
-  .then(response => response.json())
-  .then(parsedResponse => console.log(parsedResponse));
+// fetch(`${BACKEND_URL}/users`)
+//   .then(response => response.json())
+//   .then(parsedResponse => console.log(parsedResponse));
 
-  //get all the questions from db
-fetch(`${BACKEND_URL}/questions`)
-.then(response => response.json())
-.then(parsedResponse => {
-  console.log(parsedResponse)
-  questions = parsedResponse
-});
 
-// handles signup/login
 //this function declaration is hoisted. this is available before this definition because it's hoisted. if changed to an expression it will only be 
 // available to code after 
-function handleUserLogin(obj, form) {
-  form.style.display = "none"
-  topArea.classList.add("hide")
-  startButton.classList.remove("hide")
-  // localStorage.setItem("token", json.jwt)
-  // loginUser(user_json)
-  let newUserP = document.createElement('p')
-  newUserP.innerText = `Hello, ${obj.first_name}`
-  // #this gives the deck_id number 4 and "Main" that belogns to the user, find out how to access this in the add button 
-  userDisplayDiv.append(newUserP)
-  user_deck_id = obj.decks[0].id
-  user_deck_name = obj.decks[0].name
-  // figure out how to give the add button the user deck id as a value so that we have the users deck when we want to add that question to their deck
-}
-
 
 //defining variables for show/hide login/signup forms 
 const lis = document.querySelectorAll("li.tab")
 const tabContent = document.querySelector('.tab-content')
 
-//helper method to get sibling elements
+//helper method to get sibling elements 
 let getSiblings = function(elem){
   let siblings = []
   if(!elem.parentNode) {
@@ -99,6 +73,33 @@ lis.forEach(li => {
   })
 })
 
+
+// function postUser(url, data) {
+//   fetch(url, {
+//     method: 'POST',
+//     headers: {
+//       'Accept': 'application/json',
+//       'Content-Type': 'application/json'
+//     },
+//       body: JSON.stringify(data)
+//     })
+//     .then(response => response.json())
+//     .then(json => {
+//       console.log(json)
+//       let newUser = new User(json)
+//       handleUserLogin(newUser, myForm)
+//     })
+// }
+
+
+function handleUserLogin(obj, form) {
+  form.style.display = "none"
+  topArea.classList.add("hide")
+  startButton.classList.remove("hide")
+  obj.renderUser()
+  fetchQuestions(`${BACKEND_URL}/questions`) 
+}
+
 //event listener on signup form to send data to users#create and create user
 //also hides sign in form and displays main prep deck 
 const myForm = document.getElementById('myForm');
@@ -113,20 +114,21 @@ myForm.addEventListener('submit', function(e) {
         password: document.getElementById("user-password").value
       }
     
-    fetch(usersUrl, {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-        body: JSON.stringify(formData)
-      })
-      .then(response => response.json())
-      .then(json => {
-        console.log(json)
-        console.log(json.decks[0].name)
-        handleUserLogin(json, myForm)
-      })
+      // postUser(usersUrl, formData)
+      fetch(usersUrl, {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json', 
+        },
+          body: JSON.stringify(formData)
+        })
+        .then(response => response.json())
+        .then(json => {
+          console.log(json)
+          let newUser = new User(json)
+          handleUserLogin(newUser, myForm)
+        })
 
 })
 
@@ -140,6 +142,7 @@ myLoginForm.addEventListener('submit', function(e) {
         password: document.getElementById("login-password").value
       }
     
+      // postUser(loginUrl, formData)
     fetch(loginUrl, {
       method: 'POST',
       headers: {
@@ -151,37 +154,46 @@ myLoginForm.addEventListener('submit', function(e) {
       .then(response => response.json())
       .then(json => {
         console.log(json)
-        handleUserLogin(json, myLoginForm)
+        let newUser = new User(json)
+        handleUserLogin(newUser, myLoginForm)
       })
 
 })
 
 
+  //get all the questions from db
+function fetchQuestions(url) {
+    fetch(url)
+    .then(response => response.json())
+    .then(parsedResponse => {
+      console.log(parsedResponse)
+      parsedResponse.forEach(resp => {
+        let newQuestion = new Question(resp)
+        // console.log(Question.all)
+        questions = Question.all 
+        //questions is set using Question.all from class 
+      })
+    });
 
+  }
+
+  
 // Going through the deck of questions 
 const startDeck = () => {
-  // questionCounter = 0; don't need this unless you set a MAX_QUESTIONS 
   getNewQuestion()
 }
 //set current question which is a random choice from questions array, add event listeners to the choices, splice off the question from questions array when it is displayed.  
 let getNewQuestion = () => {
   if (questions.length > 0) {
-    // questionCounter ++ 
     const questionIndex = Math.floor(Math.random() * questions.length)
     currentQuestion = questions[questionIndex]
-    // OOJS refactor for question card renderQuestionCard
-    questionDiv.innerText = currentQuestion.content
-    questionContent2.innerText = currentQuestion.content_2
-
-    choices.forEach(choice => {
-      let letter = choice.dataset["letter"]
-      choice.innerText = currentQuestion["choice_" + letter]
-    })
-
+    //.render is defined in the question.js class file
+    currentQuestion.render()
     questions.splice(questionIndex, 1)
     acceptingAnswers = true
   }
 }
+
 
 //add event listeners to each choice to compare if answer is correct and load another answer 
 choices.forEach(choice => {
@@ -198,10 +210,10 @@ choices.forEach(choice => {
       selectedAnswer.parentElement.classList.add(answerClass)
 
       //keeping track of answer vs correct answer
-      console.log(selectedAnswer)
-      console.log(e.target.previousElementSibling.innerHTML)
-      console.log(answerPrefix === currentQuestion.correct_answer)
-      console.log(questions.length)
+      // console.log(selectedAnswer)
+      // console.log(e.target.previousElementSibling.innerHTML)
+      // console.log(answerPrefix === currentQuestion.correct_answer)
+      // console.log(questions.length)
       
     }
   })
@@ -216,15 +228,13 @@ nextButton.addEventListener('click', function(e) {
 
 
 
-// on clicking on start startButton, game begins with first question displayed. rename game id later 
+// on clicking on start startButton, deck begins with first question displayed. rename deck id later 
 startButton.addEventListener('click', function(e) {
-  e.preventDefault();
   e.target.classList.add('hide')
   deck.classList.remove('hide')
   nextButton.classList.remove('hide')
   addButton.classList.remove('hide')
   removeButton.classList.remove('hide')
-  
   startDeck();
   // load questions into cards here 
 })
