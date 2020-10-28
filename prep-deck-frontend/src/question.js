@@ -13,7 +13,25 @@ class Question {
         this.topic = data.topic 
         Question.all.push(this)
     }
+
+    
+    render() {
+        debugger
+          questionDiv.innerText = this.content
+          questionContent2.innerText = this.content_2
+      
+          choices.forEach(choice => {
+            let letter = choice.dataset["letter"]
+            choice.innerText = this["choice_" + letter]
+          })
+    }
+      
 }
 
+
+
 Question.all = [] 
+
+
+
 
