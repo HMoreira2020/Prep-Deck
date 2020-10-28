@@ -169,6 +169,7 @@ getNewQuestion = () => {
     // questionCounter ++ 
     const questionIndex = Math.floor(Math.random() * questions.length)
     currentQuestion = questions[questionIndex]
+    // OOJS refactor for question card renderQuestionCard
     questionDiv.innerText = currentQuestion.content
     questionContent2.innerText = currentQuestion.content_2
 
