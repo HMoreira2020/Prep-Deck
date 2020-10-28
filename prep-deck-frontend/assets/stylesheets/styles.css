@@ -40,14 +40,6 @@ hr {
 }
 
 
-body.correct {
-  
-}
-
-body.wrong {
-  
-}
-
 .container {
   width: 800px;
   max-width: 60%;
@@ -59,9 +51,6 @@ body.wrong {
 }
 
 #user-display p {
-
-  
- 
 
 
 }
@@ -114,7 +103,7 @@ body.wrong {
   font-weight: bold;
   width: 60%;
   margin: 5px;
-  background-color: #0080ff;
+  background-color: #56a5eb;
 }
 
 .controls {
@@ -190,6 +179,19 @@ input[type=text], input[type=password] {
 }
 
 /* game  */
+#question-content {
+
+}
+
+#question-content-2 {
+  text-align: center;
+  margin: auto;
+  margin-bottom: 20px;
+  width: 90%;
+  background-color: #56a5eb;
+  color: white;
+}
+
 .choice-container {
   display: flex;
   margin-bottom: 0.5rem;
