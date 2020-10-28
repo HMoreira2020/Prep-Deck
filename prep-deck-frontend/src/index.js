@@ -4,7 +4,7 @@ const nextButton = document.getElementById('next-btn')
 const addButton = document.getElementById('add-btn')
 const removeButton = document.getElementById('remove-btn')
 const topArea = document.querySelector('ul.top-area')
-let user_deck_id;
+
 
 
 const game = document.getElementById('game')
@@ -17,6 +17,8 @@ let questionCounter = 0
 let availableQuestions = []
 let questions;
 let answerClass;
+let user_deck_id;
+let user_deck_name;
 
 
 
@@ -47,6 +49,7 @@ function handleUserLogin(obj, form) {
   userDisplayDiv.append(newUserP)
   user_deck_id = obj.decks[0].id
   user_deck_name = obj.decks[0].name
+  // figure out how to give the add button the user deck id as a value so that we have the users deck when we want to add that question to their deck
 }
 
 
