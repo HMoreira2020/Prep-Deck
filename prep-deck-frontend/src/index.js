@@ -63,6 +63,7 @@ function handleUserLogin(obj, form) {
   user_deck_name = obj.decks[0].name
   addButton.dataset["id"] = user_deck_id
   addButton.innerHTML = `Add to ${obj.first_name}'s Deck`
+  fetchQuestions(`${BACKEND_URL}/questions`) 
   // figure out how to give the add button the user deck id as a value so that we have the users deck when we want to add that question to their deck
 }
 
@@ -170,24 +171,26 @@ myLoginForm.addEventListener('submit', function(e) {
 
 
   //get all the questions from db
-  fetch(`${BACKEND_URL}/questions`)
-  .then(response => response.json())
-  .then(parsedResponse => {
-    console.log(parsedResponse)
-    parsedResponse.forEach(resp => {
-      // debugger
-      let newQuestion = new Question(resp)
-      console.log(resp)
-      console.log(Question.all)
-      questions = Question.all 
-    })
+  function fetchQuestions(url) {
     
-  
-  });
+    fetch(url)
+    .then(response => response.json())
+    .then(parsedResponse => {
+      console.log(parsedResponse)
+      parsedResponse.forEach(resp => {
+      // debugger
+        let newQuestion = new Question(resp)
+        console.log(resp)
+        console.log(Question.all)
+        questions = Question.all 
+      })
+    });
+
+  }
+
   
 // Going through the deck of questions 
 startGame = () => {
-  // fetchQuestions() 
   // questionCounter = 0; don't need this unless you set a MAX_QUESTIONS 
   getNewQuestion()
 }
@@ -265,13 +268,11 @@ nextButton.addEventListener('click', function(e) {
 
 // on clicking on start startButton, game begins with first question displayed. rename game id later 
 startButton.addEventListener('click', function(e) {
-  e.preventDefault();
   e.target.classList.add('hide')
   game.classList.remove('hide')
   nextButton.classList.remove('hide')
   addButton.classList.remove('hide')
   removeButton.classList.remove('hide')
-  
   startGame();
   // load questions into cards here 
 })
