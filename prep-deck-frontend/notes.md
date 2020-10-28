@@ -1,4 +1,4 @@
-- style add and remove buttons 
+- add styling to content_2 so it's center and highlighted in different font color 
 -make sure JWT is working, how to access current_user in code 
 -make add buttons work 
 -user user_deck_id variable to set id value to add button when user logs in 
