@@ -37,6 +37,8 @@ fetch(`${BACKEND_URL}/questions`)
 });
 
 // handles signup/login
+//this function declaration is hoisted. this is available before this definition because it's hoisted. if changed to an expression it will only be 
+// available to code after 
 function handleUserLogin(obj, form) {
   form.style.display = "none"
   topArea.classList.add("hide")
@@ -56,6 +58,7 @@ function handleUserLogin(obj, form) {
 //defining variables for show/hide login/signup forms 
 const lis = document.querySelectorAll("li.tab")
 const tabContent = document.querySelector('.tab-content')
+
 //helper method to get sibling elements
 let getSiblings = function(elem){
   let siblings = []
@@ -110,20 +113,20 @@ myForm.addEventListener('submit', function(e) {
         password: document.getElementById("user-password").value
       }
     
-      fetch(usersUrl, {
-        method: 'POST',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        },
-          body: JSON.stringify(formData)
-        })
-        .then(response => response.json())
-        .then(json => {
-          console.log(json)
-          console.log(json.decks)
-          handleUserLogin(json, myForm)
-        })
+    fetch(usersUrl, {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+        body: JSON.stringify(formData)
+      })
+      .then(response => response.json())
+      .then(json => {
+        console.log(json)
+        console.log(json.decks[0].name)
+        handleUserLogin(json, myForm)
+      })
 
 })
 
@@ -137,19 +140,19 @@ myLoginForm.addEventListener('submit', function(e) {
         password: document.getElementById("login-password").value
       }
     
-      fetch(loginUrl, {
-        method: 'POST',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json', 
-        },
-          body: JSON.stringify(formData)
-        })
-        .then(response => response.json())
-        .then(json => {
-          console.log(json)
-          handleUserLogin(json, myLoginForm)
-        })
+    fetch(loginUrl, {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json', 
+      },
+        body: JSON.stringify(formData)
+      })
+      .then(response => response.json())
+      .then(json => {
+        console.log(json)
+        handleUserLogin(json, myLoginForm)
+      })
 
 })
 
@@ -160,10 +163,9 @@ startGame = () => {
   // questionCounter = 0; don't need this unless you set a MAX_QUESTIONS 
   getNewQuestion()
 }
-
+//set current question which is a random choice from questions array, add event listeners to the choices, splice off the question from questions array when it is displayed.  
 getNewQuestion = () => {
   if (questions.length > 0) {
-    
     // questionCounter ++ 
     const questionIndex = Math.floor(Math.random() * questions.length)
     currentQuestion = questions[questionIndex]
@@ -194,7 +196,7 @@ choices.forEach(choice => {
       //apply the class
       selectedAnswer.parentElement.classList.add(answerClass)
 
-      
+      //keeping track of answer vs correct answer
       console.log(selectedAnswer)
       console.log(e.target.previousElementSibling.innerHTML)
       console.log(answerPrefix === currentQuestion.correct_answer)
@@ -204,6 +206,7 @@ choices.forEach(choice => {
   })
 })
 
+//when next is hit, remove the answerClass from the choices and get a new question from questions array 
 nextButton.addEventListener('click', function(e) {
   choices.forEach(choice => choice.parentElement.classList.remove(answerClass))
   getNewQuestion()

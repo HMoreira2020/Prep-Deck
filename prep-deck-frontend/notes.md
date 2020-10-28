@@ -1,7 +1,7 @@
 - style add and remove buttons 
 -make sure JWT is working, how to access current_user in code 
 -make add buttons work 
--user user_deck_id variable to set id value to add button 
+-user user_deck_id variable to set id value to add button when user logs in 
 
 
 -javascript objects...how to refactor index.js with this? 
