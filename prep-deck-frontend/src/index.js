@@ -7,7 +7,7 @@ const topArea = document.querySelector('ul.top-area')
 
 
 
-const game = document.getElementById('game')
+const deck = document.getElementById('deck')
 const questionDiv = document.getElementById('question')
 const questionContent2 = document.getElementById('question-content-2')
 const choices = Array.from(document.getElementsByClassName("choice-text"))
@@ -29,22 +29,7 @@ fetch(`${BACKEND_URL}/users`)
   .then(response => response.json())
   .then(parsedResponse => console.log(parsedResponse));
 
-  //get all the questions from db
-// fetch(`${BACKEND_URL}/questions`)
-// .then(response => response.json())
-// .then(parsedResponse => {
-//   console.log(parsedResponse)
-//   parsedResponse.forEach(resp => {
-//     // debugger
-//     let newQuestion = new Question(resp)
-//     console.log(resp)
-//     console.log(Question.all)
-//     questions = Question.all 
-//   })
-  
-
-// });
-
+ 
 // handles signup/login
 //this function declaration is hoisted. this is available before this definition because it's hoisted. if changed to an expression it will only be 
 // available to code after 
@@ -172,7 +157,6 @@ myLoginForm.addEventListener('submit', function(e) {
 
   //get all the questions from db
   function fetchQuestions(url) {
-    
     fetch(url)
     .then(response => response.json())
     .then(parsedResponse => {
@@ -190,30 +174,11 @@ myLoginForm.addEventListener('submit', function(e) {
 
   
 // Going through the deck of questions 
-startGame = () => {
+startDeck = () => {
   // questionCounter = 0; don't need this unless you set a MAX_QUESTIONS 
   getNewQuestion()
 }
 //set current question which is a random choice from questions array, add event listeners to the choices, splice off the question from questions array when it is displayed.  
-// getNewQuestion = () => {
-//   if (questions.length > 0) {
-//     // questionCounter ++ 
-//     const questionIndex = Math.floor(Math.random() * questions.length)
-//     currentQuestion = questions[questionIndex]
-//     // OOJS refactor for question card renderQuestionCard
-//     questionDiv.innerText = currentQuestion.content
-//     questionContent2.innerText = currentQuestion.content_2
-
-//     choices.forEach(choice => {
-//       let letter = choice.dataset["letter"]
-//       choice.innerText = currentQuestion["choice_" + letter]
-//     })
-
-//     questions.splice(questionIndex, 1)
-//     acceptingAnswers = true
-//   }
-// }
-
 getNewQuestion = () => {
   if (questions.length > 0) {
     // questionCounter ++ 
@@ -266,14 +231,14 @@ nextButton.addEventListener('click', function(e) {
 
 
 
-// on clicking on start startButton, game begins with first question displayed. rename game id later 
+// on clicking on start startButton, deck begins with first question displayed. rename deck id later 
 startButton.addEventListener('click', function(e) {
   e.target.classList.add('hide')
-  game.classList.remove('hide')
+  deck.classList.remove('hide')
   nextButton.classList.remove('hide')
   addButton.classList.remove('hide')
   removeButton.classList.remove('hide')
-  startGame();
+  startDeck();
   // load questions into cards here 
 })
 
