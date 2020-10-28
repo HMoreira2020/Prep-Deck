@@ -4,6 +4,7 @@ const nextButton = document.getElementById('next-btn')
 const addButton = document.getElementById('add-btn')
 const removeButton = document.getElementById('remove-btn')
 const topArea = document.querySelector('ul.top-area')
+let user_deck_id;
 
 
 const game = document.getElementById('game')
@@ -33,42 +34,20 @@ fetch(`${BACKEND_URL}/questions`)
   questions = parsedResponse
 });
 
-
-//event listener on signup form to send data to users#create and create user
-//also hides sign in form and displays main prep deck 
-const myForm = document.getElementById('myForm');
-myForm.addEventListener('submit', function(e) {
-    e.preventDefault();
-    const usersUrl = "http://localhost:3000/users"
-    
-    let formData = {
-        first_name: document.getElementById("user-firstName").value,
-        last_name: document.getElementById("user-lastName").value,
-        email: document.getElementById("user-email").value,
-        password: document.getElementById("user-password").value
-      }
-    
-      fetch(usersUrl, {
-        method: 'POST',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        },
-          body: JSON.stringify(formData)
-        })
-        .then(response => response.json())
-        .then(json => {
-          console.log(json)
-          myForm.style.display = "none"
-          topArea.classList.add("hide")
-          startButton.classList.remove("hide")
-          let newUserP = document.createElement('p')
-          newUserP.innerText = `Hello, ${json.first_name}`
-          userDisplayDiv.append(newUserP)
-          
-        })
-
-})
+// handles signup/login
+function handleUserLogin(obj, form) {
+  form.style.display = "none"
+  topArea.classList.add("hide")
+  startButton.classList.remove("hide")
+  // localStorage.setItem("token", json.jwt)
+  // loginUser(user_json)
+  let newUserP = document.createElement('p')
+  newUserP.innerText = `Hello, ${obj.first_name}`
+  // #this gives the deck_id number 4 and "Main" that belogns to the user, find out how to access this in the add button 
+  userDisplayDiv.append(newUserP)
+  user_deck_id = obj.decks[0].id
+  user_deck_name = obj.decks[0].name
+}
 
 
 //defining variables for show/hide login/signup forms 
@@ -114,6 +93,37 @@ lis.forEach(li => {
   })
 })
 
+//event listener on signup form to send data to users#create and create user
+//also hides sign in form and displays main prep deck 
+const myForm = document.getElementById('myForm');
+myForm.addEventListener('submit', function(e) {
+    e.preventDefault();
+    const usersUrl = "http://localhost:3000/users"
+    
+    let formData = {
+        first_name: document.getElementById("user-firstName").value,
+        last_name: document.getElementById("user-lastName").value,
+        email: document.getElementById("user-email").value,
+        password: document.getElementById("user-password").value
+      }
+    
+      fetch(usersUrl, {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+          body: JSON.stringify(formData)
+        })
+        .then(response => response.json())
+        .then(json => {
+          console.log(json)
+          console.log(json.decks)
+          handleUserLogin(json, myForm)
+        })
+
+})
+
 const myLoginForm = document.getElementById('myLoginForm');
 myLoginForm.addEventListener('submit', function(e) {
     e.preventDefault();
@@ -135,18 +145,12 @@ myLoginForm.addEventListener('submit', function(e) {
         .then(response => response.json())
         .then(json => {
           console.log(json)
-          myLoginForm.style.display = "none"
-          topArea.classList.add("hide")
-          startButton.classList.remove("hide")
-          // localStorage.setItem("token", json.jwt)
-          // loginUser(user_json)
-          let newUserP = document.createElement('p')
-          newUserP.innerText = `Hello, ${json.first_name}`
-          userDisplayDiv.append(newUserP)
-
+          handleUserLogin(json, myLoginForm)
         })
 
 })
+
+
 
 // Going through the deck of questions 
 startGame = () => {
