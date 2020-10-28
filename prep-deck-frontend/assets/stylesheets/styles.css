@@ -87,6 +87,10 @@ body.wrong {
   transition: transform 150ms;
 }
 
+.btn[disabled]{
+  background-color: #cccccc;
+}
+
 .btn[disabled]:hover {
   cursor: not-allowed;
   box-shadow: none;
