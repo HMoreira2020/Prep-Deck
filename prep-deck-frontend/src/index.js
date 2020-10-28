@@ -159,12 +159,12 @@ myLoginForm.addEventListener('submit', function(e) {
 
 
 // Going through the deck of questions 
-startDeck = () => {
+const startDeck = () => {
   // questionCounter = 0; don't need this unless you set a MAX_QUESTIONS 
   getNewQuestion()
 }
 //set current question which is a random choice from questions array, add event listeners to the choices, splice off the question from questions array when it is displayed.  
-getNewQuestion = () => {
+let getNewQuestion = () => {
   if (questions.length > 0) {
     // questionCounter ++ 
     const questionIndex = Math.floor(Math.random() * questions.length)
