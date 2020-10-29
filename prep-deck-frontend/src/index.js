@@ -178,7 +178,42 @@ function fetchQuestions(url) {
 
   }
 
-  
+  // fetch to add question to users deck 
+function addQuestionToDeck(event) {  // processes click on add button (makes patch req. to backend to update the deck with a question deck.questions << question )
+  event.preventDefault()
+  const deckId = event.target.dataset.id
+  const questionId = questionDiv.dataset["id"]
+
+  const configObj = {
+      method: 'PATCH',
+      body: JSON.stringify({deck_id: deckId, question_id: questionId}), // have to send over question and deck data as json
+      headers: { // specify what kind of data I'm sending/receiving
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+      }
+  }
+
+  fetch(BACKEND_URL + `/decks/${deckId}`, configObj)
+      .then(response => response.json())
+      .then(deck_json => { // using the updated deck that is returned to update the html for that deck on the page
+        debugger
+        const userDeck = new Deck(deck_json)
+          //create a new deck obj on front end 
+          //show the 'See your deck' button 
+          // event listener on see your deck hides main deck and shows users deck 
+          //must have a main deck button with event listener
+          // document.querySelector(`li a[data-id="${id}"]`).parentElement.innerHTML = td.renderTodo()
+          // td.renderULs()
+          // attachClicksToLinks() // since I replaced the html I need to reattach the event listeners
+          // todoFormDiv.innerHTML = ""
+      })
+}
+
+
+addButton.addEventListener('click', function(e) {
+  addQuestionToDeck(e)
+})
+
 // Going through the deck of questions 
 const startDeck = () => {
   getNewQuestion()
@@ -239,37 +274,6 @@ startButton.addEventListener('click', function(e) {
   startDeck();
   // load questions into cards here 
 })
-
-//fetch to add question to users deck 
-function addQuestionToDeck(e) {  // processes click on add button (makes patch req. to backend to update the deck with a question deck.questions << question )
-  e.preventDefault()
-  const deckId = e.target.dataset.id
-  const questionId = questionDiv.dataset["id"]
-
-  const configObj = {
-      method: 'PATCH',
-      body: JSON.stringify({deck_id: deckId, question_id: questionId}), // have to send over question and deck data as json
-      headers: { // specify what kind of data I'm sending/receiving
-          'Content-Type': 'application/json',
-          'Accept': 'application/json'
-      }
-  }
-
-  fetch(BASE_URL + `/decks/${deckId}`, configObj)
-      .then(response => response.json())
-      .then(deck => { // using the updated deck that is returned to update the html for that deck on the page
-          const deck = new Deck(deck)
-          //create a new deck obj on front end 
-          //show the 'See your deck' button 
-          // event listener on see your deck hides main deck and shows users deck 
-          //must have a main deck button with event listener
-          // document.querySelector(`li a[data-id="${id}"]`).parentElement.innerHTML = td.renderTodo()
-          // td.renderULs()
-          // attachClicksToLinks() // since I replaced the html I need to reattach the event listeners
-          // todoFormDiv.innerHTML = ""
-      })
-}
-
 
 
 

@@ -5,6 +5,7 @@ class Deck {
         this.id = data.id 
         this.name = data.name 
         this.questions = data.questions
+        this.user_id = data.user_id 
         Deck.all.push(this)
     }
 
