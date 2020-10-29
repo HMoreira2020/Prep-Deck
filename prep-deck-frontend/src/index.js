@@ -18,7 +18,7 @@ let acceptingAnswers = false;
 let questionCounter = 0
 let availableQuestions = []
 let questions;
-let userQuestions;
+// let userQuestions;
 let answerClass;
 
 
@@ -212,9 +212,12 @@ function addQuestionToDeck(event) {  // processes click on add button (makes pat
   fetch(BACKEND_URL + `/decks/${deckId}`, configObj)
       .then(response => response.json())
       .then(deck_json => { // using the updated deck that is returned to update the html for that deck on the page
+        debugger
         let userDeck = new Deck(deck_json)
           //how to let user know question was added = message display from backend 
       })
+      .catch(err => console.log(err))
+  
 }
 
 // to show a users deck use Deck.findById using dataset["id"] of see your deck button 
@@ -232,8 +235,11 @@ seeButton.addEventListener('click', function(e) {
   .then(response => response.json())
   .then(json => {
     let usersDeck = new Deck(json)
-    userQuestions = [...usersDeck.questions] //I don't think these are oojs objects though
-    
+    let deckQuestions = usersDeck.questions
+    let ids = deckQuestions.map(ques => ques.id)
+    function filterById(id){return Question.findById(id)}
+    let userQuestions = ids.map(filterById)
+    startDeck(userQuestions)
     })
   
   //how do I now display the user questions in this div instead? 
@@ -241,17 +247,34 @@ seeButton.addEventListener('click', function(e) {
     removeButton.disabled = false 
     seeButton.disabled = true 
     header.innerHTML = "Your Deck"
-    // startUserDeck(userQuestions)
-  
+    
+    // startUserDeck(userQuestions) - write a separate start and getquestion method for users decks 
+    
 })
 
 // Going through the deck of questions 
-const startDeck = () => {
-  getNewQuestion()
+// const startDeck = () => {
+//   getNewQuestion()
+// }
+
+function startDeck(questions) {
+  getNewQuestion(questions)
 }
 //set current question which is a random choice from questions array, add event listeners to the choices, splice off the question from questions array when it is displayed.  
-let getNewQuestion = () => {
+// let getNewQuestion = () => {
+//   if (questions.length > 0) {
+//     const questionIndex = Math.floor(Math.random() * questions.length)
+//     currentQuestion = questions[questionIndex]
+//     //.render is defined in the question.js class file
+//     currentQuestion.render()
+//     questions.splice(questionIndex, 1)
+//     acceptingAnswers = true
+//   }
+// }
+
+function getNewQuestion(questions) {
   if (questions.length > 0) {
+    debugger
     const questionIndex = Math.floor(Math.random() * questions.length)
     currentQuestion = questions[questionIndex]
     //.render is defined in the question.js class file
@@ -260,7 +283,6 @@ let getNewQuestion = () => {
     acceptingAnswers = true
   }
 }
-
 
 //set current question which is a random choice from questions array, add event listeners to the choices, splice off the question from questions array when it is displayed.  
 
@@ -291,7 +313,7 @@ choices.forEach(choice => {
 //when next is hit, remove the answerClass from the choices and get a new question from questions array 
 nextButton.addEventListener('click', function(e) {
   choices.forEach(choice => choice.parentElement.classList.remove(answerClass))
-  getNewQuestion()
+  getNewQuestion(questions)
    
 })
 
@@ -305,7 +327,7 @@ startButton.addEventListener('click', function(e) {
   addButton.classList.remove('hide')
   removeButton.classList.remove('hide')
   seeButton.classList.remove('hide')
-  startDeck();
+  startDeck(questions);
   // load questions into cards here 
 })
 

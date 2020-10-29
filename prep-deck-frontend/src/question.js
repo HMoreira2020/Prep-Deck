@@ -30,7 +30,7 @@ class Question {
     static findById(id) {
       return this.all.find(question => question.id === id)
     }
-      
+
 }
 
 
