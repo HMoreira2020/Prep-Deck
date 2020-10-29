@@ -5,6 +5,7 @@ const addButton = document.getElementById('add-btn')
 const seeButton = document.getElementById('see-btn')
 const removeButton = document.getElementById('remove-btn')
 const topArea = document.querySelector('ul.top-area')
+const header = document.querySelector('h1')
 
 
 
@@ -17,6 +18,7 @@ let acceptingAnswers = false;
 let questionCounter = 0
 let availableQuestions = []
 let questions;
+let userQuestions;
 let answerClass;
 
 
@@ -107,6 +109,14 @@ function handleUserLogin(obj, form) {
   obj.renderUser()
 }
 
+function seeDeck() {
+  // event listener on see button that gets request from decks/deck_id  
+  // deck.questions become questions 
+  // header changes from Prep Deck to User's first_name Deck 
+
+  // startDeck() 
+
+}
 //event listener on signup form to send data to users#create and create user
 //also hides sign in form and displays main prep deck 
 const myForm = document.getElementById('myForm');
@@ -177,8 +187,7 @@ function fetchQuestions(url) {
       parsedResponse.forEach(resp => {
         let newQuestion = new Question(resp)
         // console.log(Question.all)
-        questions = Question.all 
-        //questions = [...Question.all] - better to do this?
+        questions = [...Question.all]
         //questions is set using Question.all from class 
       })
     });
@@ -203,19 +212,8 @@ function addQuestionToDeck(event) {  // processes click on add button (makes pat
   fetch(BACKEND_URL + `/decks/${deckId}`, configObj)
       .then(response => response.json())
       .then(deck_json => { // using the updated deck that is returned to update the html for that deck on the page
-        debugger
         let userDeck = new Deck(deck_json)
-        let usersQuestions = userDeck.questions 
-        seeButton.disabled = false 
-        
-          //create a new deck obj on front end 
-          //show the 'See your deck' button 
-          // event listener on see your deck hides main deck and shows users deck 
-          //must have a main deck button with event listener
-          // document.querySelector(`li a[data-id="${id}"]`).parentElement.innerHTML = td.renderTodo()
-          // td.renderULs()
-          // attachClicksToLinks() // since I replaced the html I need to reattach the event listeners
-          // todoFormDiv.innerHTML = ""
+          //how to let user know question was added = message display from backend 
       })
 }
 
@@ -224,6 +222,27 @@ function addQuestionToDeck(event) {  // processes click on add button (makes pat
 
 addButton.addEventListener('click', function(e) {
   addQuestionToDeck(e)
+})
+
+
+seeButton.addEventListener('click', function(e) {
+  let deckId = e.target.dataset.id
+  
+  fetch(BACKEND_URL + `/decks/${deckId}`)
+  .then(response => response.json())
+  .then(json => {
+    let usersDeck = new Deck(json)
+    userQuestions = [...usersDeck.questions] //I don't think these are oojs objects though
+    
+    })
+  
+  //how do I now display the user questions in this div instead? 
+    addButton.disabled = true 
+    removeButton.disabled = false 
+    seeButton.disabled = true 
+    header.innerHTML = "Your Deck"
+    // startUserDeck(userQuestions)
+  
 })
 
 // Going through the deck of questions 
@@ -242,6 +261,8 @@ let getNewQuestion = () => {
   }
 }
 
+
+//set current question which is a random choice from questions array, add event listeners to the choices, splice off the question from questions array when it is displayed.  
 
 //add event listeners to each choice to compare if answer is correct and load another answer 
 choices.forEach(choice => {

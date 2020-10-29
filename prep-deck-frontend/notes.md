@@ -21,3 +21,7 @@ fetch request to user show page to display user deck with question
 
 
 why is login so slow now?  is it the question serializer that's fetching questions and the decks they belong to? 
+how to show errors in the json resp? 
+
+//must have a main deck button with event listener to return to main deck 
+how to make see your deck button not disabled if users deck has questions....how to figure this out if it does or not 
