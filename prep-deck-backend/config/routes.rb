@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   resources :decks
+  #put/patch '/decks/:deck_id', to 'decks#update' is included in resources so I don't need to define it. 
   resources :questions
   resources :users
   post '/login', to: 'sessions#create'

@@ -1,6 +1,47 @@
 class DecksController < ApplicationController
-    
-    def create 
+    before_action :set_deck, only: [:show, :update, :destroy]
+
+    def show
+        render json: DeckSerializer.new(@deck).to_serialized_json
     end 
 
+     # PATCH/PUT /decks/9
+  def update 
+    @question = Question.find(params[:question_id])
+    add_question_to_deck(@question, @deck)
+  end
+    
+  private
+    def set_deck
+      @deck = Deck.find(params[:id])
+    end
+
+    def deck_params
+      params.require(:deck).permit(:name, :question_id)
+    end
+
+    def add_question_to_deck(question, deck)
+        if deck.already_has_question?(question)
+            render json: { errors: deck.errors.full_messages}, status: :unprocessable_entity, alert: "You have already added this question to your deck." 
+        else 
+            deck.add_question(question)
+            render json: DeckSerializer.new(@deck).to_serialized_json, status: :accepted
+        end
+    end
+
+    # In deck.rb helpers 
+    # def already_has_question?(question) #call deck.already_has_question(@question)
+    #     self.questions.include?(question) 
+    # end 
+
+    # def add_question(question) #call deck.add_question(@question)
+    #     self.questions << question
+    #     self.save 
+    # end 
+    
+
 end
+
+#Parameters {"deck_id"=>"9", "question_id"=>"52", "controller"=>"decks", "action"=>"update", "id"=>"9", "deck"=>{}} permitted: false>
+##<Deck id: 9, name: "Heather's deck", created_at: "2020-10-28 04:26:19", updated_at: "2020-10-28 04:26:19", user_id: 8>
+#question = Question.find(params[:question_id])
