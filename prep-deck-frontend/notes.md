@@ -18,3 +18,6 @@ patch fetch request to add the wuestion to that deck
 
 show user deck 
 fetch request to user show page to display user deck with question 
+
+
+why is login so slow now?  is it the question serializer that's fetching questions and the decks they belong to? 

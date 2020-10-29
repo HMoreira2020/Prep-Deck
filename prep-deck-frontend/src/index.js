@@ -2,6 +2,7 @@ const userDisplayDiv = document.getElementById('user-display')
 const startButton = document.getElementById('start-btn')
 const nextButton = document.getElementById('next-btn')
 const addButton = document.getElementById('add-btn')
+const seeButton = document.getElementById('see-btn')
 const removeButton = document.getElementById('remove-btn')
 const topArea = document.querySelector('ul.top-area')
 
@@ -25,6 +26,13 @@ const BACKEND_URL = 'http:localhost:3000';
 //   .then(response => response.json())
 //   .then(parsedResponse => console.log(parsedResponse));
 
+document.addEventListener('DOMContentLoaded', () => {
+  // fetch and load questions
+  console.log("DOM is Loaded");
+  
+  fetchQuestions(`${BACKEND_URL}/questions`) 
+  
+})
 
 //this function declaration is hoisted. this is available before this definition because it's hoisted. if changed to an expression it will only be 
 // available to code after 
@@ -97,7 +105,6 @@ function handleUserLogin(obj, form) {
   topArea.classList.add("hide")
   startButton.classList.remove("hide")
   obj.renderUser()
-  fetchQuestions(`${BACKEND_URL}/questions`) 
 }
 
 //event listener on signup form to send data to users#create and create user
@@ -197,7 +204,10 @@ function addQuestionToDeck(event) {  // processes click on add button (makes pat
       .then(response => response.json())
       .then(deck_json => { // using the updated deck that is returned to update the html for that deck on the page
         debugger
-        const userDeck = new Deck(deck_json)
+        let userDeck = new Deck(deck_json)
+        let usersQuestions = userDeck.questions 
+        seeButton.disabled = false 
+        
           //create a new deck obj on front end 
           //show the 'See your deck' button 
           // event listener on see your deck hides main deck and shows users deck 
@@ -208,6 +218,8 @@ function addQuestionToDeck(event) {  // processes click on add button (makes pat
           // todoFormDiv.innerHTML = ""
       })
 }
+
+// to show a users deck use Deck.findById using dataset["id"] of see your deck button 
 
 
 addButton.addEventListener('click', function(e) {
@@ -271,6 +283,7 @@ startButton.addEventListener('click', function(e) {
   nextButton.classList.remove('hide')
   addButton.classList.remove('hide')
   removeButton.classList.remove('hide')
+  seeButton.classList.remove('hide')
   startDeck();
   // load questions into cards here 
 })
