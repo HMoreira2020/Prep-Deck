@@ -7,8 +7,14 @@ class DecksController < ApplicationController
 
      # PATCH/PUT /decks/9
   def update 
-    @question = Question.find(params[:question_id])
-    add_question_to_deck(@question, @deck)
+    question = Question.find(params[:question_id])
+    @deck.questions << question
+    if @deck.save 
+      render json: { errors: @deck.errors.full_messages }
+    else 
+      render json: DeckSerializer.new(@deck).to_serialized_json, status: :accepted
+    end 
+    # add_question_to_deck(@question, @deck)
   end
     
   private
@@ -20,14 +26,15 @@ class DecksController < ApplicationController
       params.require(:deck).permit(:name, :question_id)
     end
 
-    def add_question_to_deck(question, deck)
-        if deck.already_has_question?(question)
-            render json: { errors: deck.errors.full_messages}, status: :unprocessable_entity, alert: "You have already added this question to your deck." 
-        else 
-            deck.add_question(question)
-            render json: DeckSerializer.new(@deck).to_serialized_json, status: :accepted
-        end
-    end
+    # def add_question_to_deck(question, deck)
+    #     if deck.already_has_question?(question)
+    #       byebug
+    #         render json: { errors: deck.errors.full_messages}, status: :unprocessable_entity, alert: "You have already added this question to your deck." 
+    #     else 
+    #         deck.add_question(question)
+    #         render json: DeckSerializer.new(@deck).to_serialized_json, status: :accepted
+    #     end
+    # end
 
     # In deck.rb helpers 
     # def already_has_question?(question) #call deck.already_has_question(@question)
