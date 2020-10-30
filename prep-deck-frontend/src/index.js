@@ -3,6 +3,7 @@ const startButton = document.getElementById('start-btn')
 const nextButton = document.getElementById('next-btn')
 const addButton = document.getElementById('add-btn')
 const seeButton = document.getElementById('see-btn')
+const mainButton = document.getElementById('main-btn')
 const removeButton = document.getElementById('remove-btn')
 const topArea = document.querySelector('ul.top-area')
 const header = document.querySelector('h1')
@@ -266,11 +267,11 @@ seeButton.addEventListener('click', function(e) {
     let userQuestions = ids.map(filterById)
     startDeck(userQuestions)
     })
-  
-  //how do I now display the user questions in this div instead? 
+    
     addButton.disabled = true 
     removeButton.disabled = false 
     seeButton.disabled = true 
+    mainButton.disabled = false
     header.innerHTML = "Your Deck"
 })
 
@@ -278,6 +279,12 @@ seeButton.addEventListener('click', function(e) {
 // const startDeck = () => {
 //   getNewQuestion()
 // }
+mainButton.addEventListener('click', function(e){
+  startDeck(questions)
+  addButton.disabled = false
+  removeButton.disabled = true
+  seeButton.diabled = false
+})
 
 function startDeck(questions) {
   getNewQuestion(questions)
@@ -337,6 +344,8 @@ startButton.addEventListener('click', function(e) {
   nextButton.classList.remove('hide')
   addButton.classList.remove('hide')
   removeButton.classList.remove('hide')
+  mainButton.classList.remove('hide')
+  mainButton.disabled = true
   seeButton.classList.remove('hide')
   startDeck(questions);
   // load questions into cards here 
