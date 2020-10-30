@@ -19,7 +19,6 @@ class Question {
       questionDiv.innerText = this.content
       questionDiv.dataset["id"] = this.id 
       questionContent2.innerText = this.content_2
-
       
       choices.forEach(choice => {
         let letter = choice.dataset["letter"]

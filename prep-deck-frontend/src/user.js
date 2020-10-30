@@ -15,6 +15,7 @@ class User {
         let newUserP = document.createElement('p')
         newUserP.innerText = `Hello, ${this.first_name}`
         seeButton.dataset["id"] = this.deck_id
+        removeButton.dataset["id"] = this.deck_id
         addButton.dataset["id"] = this.deck_id
         addButton.innerHTML = `Add to ${this.first_name}'s Deck`
         userDisplayDiv.append(newUserP)

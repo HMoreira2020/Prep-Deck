@@ -29,11 +29,8 @@ const BACKEND_URL = 'http:localhost:3000';
 //   .then(parsedResponse => console.log(parsedResponse));
 
 document.addEventListener('DOMContentLoaded', () => {
-  // fetch and load questions
   console.log("DOM is Loaded");
-  
   fetchQuestions(`${BACKEND_URL}/questions`) 
-  
 })
 
 //this function declaration is hoisted. this is available before this definition because it's hoisted. if changed to an expression it will only be 
@@ -109,14 +106,7 @@ function handleUserLogin(obj, form) {
   obj.renderUser()
 }
 
-function seeDeck() {
-  // event listener on see button that gets request from decks/deck_id  
-  // deck.questions become questions 
-  // header changes from Prep Deck to User's first_name Deck 
 
-  // startDeck() 
-
-}
 //event listener on signup form to send data to users#create and create user
 //also hides sign in form and displays main prep deck 
 const myForm = document.getElementById('myForm');
@@ -211,8 +201,7 @@ function addQuestionToDeck(event) {  // processes click on add button (makes pat
 
   fetch(BACKEND_URL + `/decks/${deckId}`, configObj)
       .then(response => response.json())
-      .then(deck_json => { // using the updated deck that is returned to update the html for that deck on the page
-        debugger
+      .then(deck_json => { 
         let userDeck = new Deck(deck_json)
           //how to let user know question was added = message display from backend 
       })
@@ -220,7 +209,24 @@ function addQuestionToDeck(event) {  // processes click on add button (makes pat
   
 }
 
-// to show a users deck use Deck.findById using dataset["id"] of see your deck button 
+// function removeQuestionFromDeck(event) {
+//   event.preventDefault()
+//     const configObj = {
+//         method: 'DELETE',
+//         headers: { 
+//             'Content-Type': 'application/json',
+//             'Accept': 'application/json'
+//         }
+//     }
+//     // target here is the delete button for the given todo
+//     fetch(BASE_URL + `/decks/${event.target.dataset.id}`, configObj)
+//     .then(event.target.parentElement.remove())
+//     // I don't need to do anything in the "then" portion of the fetch per se, but it's best practice because 
+//     // I am hooking the two things together - this makes sure I only remove the todo from the DOM
+//     // if I have successfully deleted it from the database
+// }
+
+// }
 
 
 addButton.addEventListener('click', function(e) {
@@ -247,9 +253,6 @@ seeButton.addEventListener('click', function(e) {
     removeButton.disabled = false 
     seeButton.disabled = true 
     header.innerHTML = "Your Deck"
-    
-    // startUserDeck(userQuestions) - write a separate start and getquestion method for users decks 
-    
 })
 
 // Going through the deck of questions 
@@ -260,17 +263,7 @@ seeButton.addEventListener('click', function(e) {
 function startDeck(questions) {
   getNewQuestion(questions)
 }
-//set current question which is a random choice from questions array, add event listeners to the choices, splice off the question from questions array when it is displayed.  
-// let getNewQuestion = () => {
-//   if (questions.length > 0) {
-//     const questionIndex = Math.floor(Math.random() * questions.length)
-//     currentQuestion = questions[questionIndex]
-//     //.render is defined in the question.js class file
-//     currentQuestion.render()
-//     questions.splice(questionIndex, 1)
-//     acceptingAnswers = true
-//   }
-// }
+
 
 function getNewQuestion(questions) {
   if (questions.length > 0) {
@@ -284,7 +277,7 @@ function getNewQuestion(questions) {
   }
 }
 
-//set current question which is a random choice from questions array, add event listeners to the choices, splice off the question from questions array when it is displayed.  
+
 
 //add event listeners to each choice to compare if answer is correct and load another answer 
 choices.forEach(choice => {
@@ -316,7 +309,6 @@ nextButton.addEventListener('click', function(e) {
   getNewQuestion(questions)
    
 })
-
 
 
 // on clicking on start startButton, deck begins with first question displayed. rename deck id later 
