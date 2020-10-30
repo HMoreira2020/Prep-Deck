@@ -209,24 +209,43 @@ function addQuestionToDeck(event) {  // processes click on add button (makes pat
   
 }
 
-// function removeQuestionFromDeck(event) {
-//   event.preventDefault()
-//     const configObj = {
-//         method: 'DELETE',
-//         headers: { 
-//             'Content-Type': 'application/json',
-//             'Accept': 'application/json'
-//         }
-//     }
-//     // target here is the delete button for the given todo
-//     fetch(BASE_URL + `/decks/${event.target.dataset.id}`, configObj)
-//     .then(event.target.parentElement.remove())
-//     // I don't need to do anything in the "then" portion of the fetch per se, but it's best practice because 
-//     // I am hooking the two things together - this makes sure I only remove the todo from the DOM
-//     // if I have successfully deleted it from the database
-// }
+function removeQuestionFromDeck(event) {
+  event.preventDefault()
+  const deckId = event.target.dataset.id
+  const questionId = questionDiv.dataset["id"]
 
-// }
+    const configObj = {
+        method: 'DELETE',
+        headers: { 
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+        },
+        body: JSON.stringify({deck_id: deckId, question_id: questionId})
+    }
+    // target here is the delete button for the given question but it has a data-id: deck_id so we can delete question from the deck" 
+    fetch(BACKEND_URL + `/decks/${event.target.dataset.id}`, configObj)
+    .then(response => response.json())
+    .then(json => { 
+      let usersDeck = Deck.findById(json.id)
+      // let usersDeck = new Deck(json)
+      // debugger - everything below this should be DRYed up with code from addtoDeck
+      let deckQuestions = usersDeck.questions
+      let ids = deckQuestions.map(ques => ques.id)
+      function filterById(id){return Question.findById(id)}
+      let userQuestions = ids.map(filterById)
+      startDeck(userQuestions)
+          //how to let user know question was removed = message display from backend 
+      })
+  
+    // I don't need to do anything in the "then" portion of the fetch per se, but it's best practice because 
+    // I am hooking the two things together - this makes sure I only remove the todo from the DOM
+    // if I have successfully deleted it from the database
+}
+
+removeButton.addEventListener('click', function(e) {
+  removeQuestionFromDeck(e)
+})
+
 
 
 addButton.addEventListener('click', function(e) {
@@ -267,7 +286,7 @@ function startDeck(questions) {
 
 function getNewQuestion(questions) {
   if (questions.length > 0) {
-    debugger
+    // debugger
     const questionIndex = Math.floor(Math.random() * questions.length)
     currentQuestion = questions[questionIndex]
     //.render is defined in the question.js class file
