@@ -1,6 +1,8 @@
 class DecksController < ApplicationController
     before_action :set_deck, only: [:show, :update, :destroy]
+    before_action :set_question, only: [:update, :destroy]
 
+    #Get /decks/9 
     def show
         render json: DeckSerializer.new(@deck).to_serialized_json
     end 
@@ -14,17 +16,31 @@ class DecksController < ApplicationController
     else 
       render json: DeckSerializer.new(@deck).to_serialized_json, status: :accepted
     end 
-    # add_question_to_deck(@question, @deck)
   end
+
+  # Delete /decks/9
+  def destroy
+    if @deck.questions.include?(@question)
+      @deck.questions.delete(@question)
+      render json: DeckSerializer.new(@deck).to_serialized_json, status: :accepted
+    else 
+      render json: { message: "Question is not in your deck." }, status: unprocessable_entity
+    end
+  end 
     
   private
     def set_deck
       @deck = Deck.find(params[:id])
     end
 
+    def set_question
+      @question = Question.find(params[:question_id])
+    end 
+
     def deck_params
       params.require(:deck).permit(:name, :question_id)
     end
+
 
     # def add_question_to_deck(question, deck)
     #     if deck.already_has_question?(question)

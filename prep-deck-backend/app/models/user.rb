@@ -6,7 +6,7 @@ class User < ApplicationRecord
     validates :last_name, presence: true
     validates :password, presence: true  
     validates :email, uniqueness: true, presence: true, 'valid_email_2/email': true
-    # add validations to make sure same user doesn't sign up twice 
+    
     
 
 end
