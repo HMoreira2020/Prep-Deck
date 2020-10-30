@@ -7,6 +7,8 @@ const mainButton = document.getElementById('main-btn')
 const removeButton = document.getElementById('remove-btn')
 const topArea = document.querySelector('ul.top-area')
 const header = document.querySelector('h1')
+const explanationP = document.getElementById('explanation')
+const explanationContainer = document.getElementById('explanation-container')
 
 
 
@@ -318,7 +320,10 @@ choices.forEach(choice => {
 
       //apply the class
       selectedAnswer.parentElement.classList.add(answerClass)
-
+      // explanationContainer.classList.remove('hide')
+      // explanationContainer.firstChild.classList.remove('hide')
+      // explanationP.classList.remove('hide')
+      explanationP.innerHTML = currentQuestion.explanation ? currentQuestion.explanation : ""
       //keeping track of answer vs correct answer
       // console.log(selectedAnswer)
       // console.log(e.target.previousElementSibling.innerHTML)
