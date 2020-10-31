@@ -22,7 +22,7 @@ class DecksController < ApplicationController
   def destroy
     if @deck.questions.include?(@question)
       @deck.questions.delete(@question)
-      render json: DeckSerializer.new(@deck).to_serialized_json, status: :accepted
+      render json: @deck, status: :accepted
     else 
       render json: { message: "Question is not in your deck." }, status: unprocessable_entity
     end
