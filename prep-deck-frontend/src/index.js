@@ -240,9 +240,7 @@ function removeQuestionFromDeck(event) {
           //how to let user know question was removed = message display from backend 
       })
   
-    // I don't need to do anything in the "then" portion of the fetch per se, but it's best practice because 
-    // I am hooking the two things together - this makes sure I only remove the todo from the DOM
-    // if I have successfully deleted it from the database
+    
 }
 
 removeButton.addEventListener('click', function(e) {
@@ -254,6 +252,28 @@ removeButton.addEventListener('click', function(e) {
 addButton.addEventListener('click', function(e) {
   addQuestionToDeck(e)
 })
+
+// function seeDeck(event) {
+//   event.preventDefault()
+//   let deckId = e.target.dataset.id
+
+//   fetch(BACKEND_URL + `/decks/${deckId}`)
+//   .then(response => response.json())
+//   .then(json => {
+//     let usersDeck = new Deck(json)
+//     let deckQuestions = usersDeck.questions
+//     let ids = deckQuestions.map(ques => ques.id)
+//     function filterById(id){return Question.findById(id)}
+//     let userQuestions = ids.map(filterById)
+//     startDeck(userQuestions)
+//     })
+    
+//     addButton.disabled = true 
+//     removeButton.disabled = false 
+//     seeButton.disabled = true 
+//     mainButton.disabled = false
+//     header.innerHTML = "Your Deck"
+// }
 
 
 seeButton.addEventListener('click', function(e) {
@@ -277,17 +297,20 @@ seeButton.addEventListener('click', function(e) {
     header.innerHTML = "Your Deck"
 })
 
-// Going through the deck of questions 
-// const startDeck = () => {
-//   getNewQuestion()
-// }
+
 mainButton.addEventListener('click', function(e){
   startDeck(questions)
   addButton.disabled = false
   removeButton.disabled = true
-  seeButton.diabled = false
+  seeButton.disabled = false
+  mainButton.disabled = true
+  header.innerHTML = "Prep Deck"
 })
 
+// Going through the deck of questions 
+// const startDeck = () => {
+//   getNewQuestion()
+// }
 function startDeck(questions) {
   getNewQuestion(questions)
 }
