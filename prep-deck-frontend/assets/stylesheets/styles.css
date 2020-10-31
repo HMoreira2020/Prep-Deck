@@ -49,7 +49,8 @@ hr {
 }
 
 #user-display p {
-
+  padding-bottom: .5em;
+  text-align: center;
 
 }
 
@@ -99,9 +100,9 @@ hr {
 
 .add-btn, .remove-btn, .see-btn, .main-btn{
   font-size: 1rem;
-  font-weight: bold;
   margin: 5px;
   background-color: #56a5eb;
+  text-align: center;
 }
 
 .controls {
@@ -177,7 +178,9 @@ input[type=text], input[type=password] {
 }
 
 /* game  */
-#question-content {
+#question {
+  text-align: center;
+  color: white;
 
 }
 
@@ -186,10 +189,16 @@ input[type=text], input[type=password] {
   margin: auto;
   margin-bottom: 20px;
   width: 90%;
-  background-color: #56a5eb;
   color: white;
 }
 
+#question-container {
+  background-color: #56a5eb;
+  width: 100%;
+  padding: .25px;
+  margin-bottom: 0.5rem;
+  border: 0.1rem solid rgb(86, 165, 235, 0.25);
+}
 .choice-container {
   display: flex;
   margin-bottom: 0.5rem;

@@ -295,7 +295,6 @@ function startDeck(questions) {
 
 function getNewQuestion(questions) {
   if (questions.length > 0) {
-    // debugger
     const questionIndex = Math.floor(Math.random() * questions.length)
     currentQuestion = questions[questionIndex]
     //.render is defined in the question.js class file
@@ -346,6 +345,7 @@ nextButton.addEventListener('click', function(e) {
 // on clicking on start startButton, deck begins with first question displayed. rename deck id later 
 startButton.addEventListener('click', function(e) {
   e.target.classList.add('hide')
+  userDisplayDiv.classList.add('hide')
   deck.classList.remove('hide')
   nextButton.classList.remove('hide')
   addButton.classList.remove('hide')
