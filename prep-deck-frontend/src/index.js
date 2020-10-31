@@ -135,6 +135,7 @@ myForm.addEventListener('submit', function(e) {
         })
         .then(response => response.json())
         .then(json => {
+          debugger
           console.log(json)
           let newUser = new User(json)
           handleUserLogin(newUser, myForm)
@@ -233,10 +234,12 @@ function removeQuestionFromDeck(event) {
       // let usersDeck = new Deck(json)
       // debugger - everything below this should be DRYed up with code from addtoDeck
       let deckQuestions = usersDeck.questions
+      debugger
       let ids = deckQuestions.map(ques => ques.id)
       function filterById(id){return Question.findById(id)}
       let userQuestions = ids.map(filterById)
       startDeck(userQuestions)
+     
           //how to let user know question was removed = message display from backend 
       })
   
@@ -278,7 +281,7 @@ addButton.addEventListener('click', function(e) {
 
 seeButton.addEventListener('click', function(e) {
   let deckId = e.target.dataset.id
-  
+  debugger
   fetch(BACKEND_URL + `/decks/${deckId}`)
   .then(response => response.json())
   .then(json => {
@@ -288,6 +291,7 @@ seeButton.addEventListener('click', function(e) {
     function filterById(id){return Question.findById(id)}
     let userQuestions = ids.map(filterById)
     startDeck(userQuestions)
+  
     })
     
     addButton.disabled = true 
@@ -299,6 +303,7 @@ seeButton.addEventListener('click', function(e) {
 
 
 mainButton.addEventListener('click', function(e){
+  
   startDeck(questions)
   addButton.disabled = false
   removeButton.disabled = true
