@@ -94,12 +94,12 @@ hr {
 
 .add-remove-controls {
   display: flex;
+ 
 }
 
-.add-btn, .remove-btn, .see-btn {
+.add-btn, .remove-btn, .see-btn, .main-btn{
   font-size: 1rem;
   font-weight: bold;
-  width: 60%;
   margin: 5px;
   background-color: #56a5eb;
 }
@@ -206,6 +206,12 @@ input[type=text], input[type=password] {
   transition: transform 150ms;
 }
 
+#explanation-container:hover {
+  cursor: not-allowed;
+  box-shadow: none;
+  transform: none;
+}
+
 .choice-prefix {
   padding: 1.5rem 2.5rem;
   background-color: #56a5eb;
@@ -235,5 +241,5 @@ p {
 }
 
 #explanation {
-  
+
 }
