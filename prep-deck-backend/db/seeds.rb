@@ -102,7 +102,7 @@ Question.create!(
             topic: "Javascript Fundamentals" 
         },
         {
-            content:"1. Which operator is known as the equality operator, which checks whether its two operands are 'equal'?" ,
+            content:"Which operator is known as the equality operator, which checks whether its two operands are 'equal'?" ,
             choice_a: "=",
             choice_b: "==",
             choice_c: "===",
@@ -147,12 +147,16 @@ deck = Deck.new(name: "Main")
 deck.user = User.find(1)
 deck.questions = questions
 deck.save 
-p "Created #{Question.count} movies"
+p "Created #{Question.count} questions"
 
 questions2 = Question.where(topic: "Javascript Expressions and Operators")
 deck2 = Deck.new(name: "Javascript Expressions and Operators" )
 deck2.questions = questions2
+deck2.user = User.find(1)
+deck2.save
 
 questions3 = Question.where(topic: "Javascript Fundamentals" )
 deck3 = Deck.new(name: "Javascript Fundamentals"  )
 deck3.questions = questions3
+deck3.user = User.find(1)
+deck3.save

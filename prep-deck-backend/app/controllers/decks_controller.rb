@@ -12,9 +12,9 @@ class DecksController < ApplicationController
     question = Question.find(params[:question_id])
     @deck.questions << question
     if @deck.save 
-      render json: { errors: @deck.errors.full_messages }
-    else 
       render json: DeckSerializer.new(@deck).to_serialized_json, status: :accepted
+    else 
+      render json: { errors: @deck.errors.full_messages }
     end 
   end
 
