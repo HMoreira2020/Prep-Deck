@@ -149,5 +149,10 @@ deck.questions = questions
 deck.save 
 p "Created #{Question.count} movies"
 
+questions2 = Question.where(topic: "Javascript Expressions and Operators")
+deck2 = Deck.new(name: "Javascript Expressions and Operators" )
+deck2.questions = questions2
 
-
+questions3 = Question.where(topic: "Javascript Fundamentals" )
+deck3 = Deck.new(name: "Javascript Fundamentals"  )
+deck3.questions = questions3
