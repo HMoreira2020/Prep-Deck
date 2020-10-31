@@ -7,7 +7,7 @@ const mainButton = document.getElementById('main-btn')
 const removeButton = document.getElementById('remove-btn')
 const topArea = document.querySelector('ul.top-area')
 const header = document.querySelector('h1')
-const explanationP = document.getElementById('explanation')
+const explanation = document.getElementById('explanation')
 const explanationContainer = document.getElementById('explanation-container')
 
 
@@ -320,11 +320,11 @@ choices.forEach(choice => {
 
       //apply the class
       selectedAnswer.parentElement.classList.add(answerClass)
-      // explanationContainer.classList.remove('hide')
-      // explanationContainer.firstChild.classList.remove('hide')
-      // explanationP.classList.remove('hide')
-      explanationP.innerHTML = currentQuestion.explanation ? currentQuestion.explanation : ""
-      //keeping track of answer vs correct answer
+  
+      explanation.classList.remove('hide')
+      explanation.innerHTML = currentQuestion.explanation 
+      // explanationP.innerHTML = currentQuestion.explanation ? currentQuestion.explanation : ""
+      //keeping track of selected answer vs correct answer
       // console.log(selectedAnswer)
       // console.log(e.target.previousElementSibling.innerHTML)
       // console.log(answerPrefix === currentQuestion.correct_answer)
@@ -337,6 +337,7 @@ choices.forEach(choice => {
 //when next is hit, remove the answerClass from the choices and get a new question from questions array 
 nextButton.addEventListener('click', function(e) {
   choices.forEach(choice => choice.parentElement.classList.remove(answerClass))
+  explanation.classList.add('hide')
   getNewQuestion(questions)
    
 })
