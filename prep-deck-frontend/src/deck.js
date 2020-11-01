@@ -10,6 +10,7 @@ class Deck {
     //deck.startDeck()
     startDeck() {
         header.innerHTML = this.name
+        mainButton.dataset["id"] = this.id
         let questions = this.questions.map(ques => new Question(ques))
         let cloneQuestions = [...questions]
         console.log(cloneQuestions)

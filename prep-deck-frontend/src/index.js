@@ -273,12 +273,18 @@ addButton.addEventListener('click', function(e) {
 
 
 seeButton.addEventListener('click', function(e) {
+  debugger
   seeDeck()
+  addButton.disabled = true
+  removeButton.disabled = false
+  seeButton.disabled = true 
+  mainButton.disabled = false
 })
 
 
 
 mainButton.addEventListener('click', function(e){
+  debugger
   //backToMain()
   seeDeck()
   addButton.disabled = false
@@ -330,10 +336,7 @@ function startDeck() {
         debugger
         let deck = new Deck(json)
         deck.seeDeck() 
-        addButton.disabled = true 
-        removeButton.disabled = false 
-        seeButton.disabled = true 
-        mainButton.disabled = false
+        
         // in deck.js 
         //seeDeck() {
         //   header.innerHTML = this.name
