@@ -7,14 +7,26 @@ class Deck {
         this.user_id = data.user_id 
         Deck.all.push(this)
     }
+
+    // createQuestions() {
+    //     return this.questions.map(ques => new Question(ques))
+    // }
+
+    // findQuestions() {
+    //     let ids = this.questions.map(ques => ques.id)
+    //     function filterById(id){return Question.findById(id)}
+    //     return ids.map(filterById)
+    // }
+
     //deck.startDeck()
     startDeck() {
         header.innerHTML = this.name
         mainButton.dataset["id"] = this.id
+        // let questions = this.createQuestions() 
         let questions = this.questions.map(ques => new Question(ques))
+        debugger
         let cloneQuestions = [...questions]
         console.log(cloneQuestions)
-        debugger
         getNewQuestion(cloneQuestions)
     }
 
@@ -25,7 +37,6 @@ class Deck {
         let questions = ids.map(filterById)
         let cloneQuestions = [...questions]
         console.log(cloneQuestions)
-        debugger
         getNewQuestion(cloneQuestions)
     }
 

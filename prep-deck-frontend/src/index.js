@@ -306,6 +306,7 @@ function startDeck() {
   fetch(BACKEND_URL + `/decks/${deck_id}`)
   .then(response => response.json())
   .then(json => {
+    debugger
       console.log(json)
       let deck = new Deck(json)
       deck.startDeck() 
@@ -395,6 +396,7 @@ choices.forEach(choice => {
   
       explanation.classList.remove('hide')
       explanation.innerHTML = currentQuestion.explanation 
+
       // explanationP.innerHTML = currentQuestion.explanation ? currentQuestion.explanation : ""
       //keeping track of selected answer vs correct answer
       // console.log(selectedAnswer)
