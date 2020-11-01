@@ -20,21 +20,31 @@ let currentQuestion = {}
 let acceptingAnswers = false;
 let questionCounter = 0
 let availableQuestions = []
-let questions;
+// let questions;
 // let userQuestions;
 let answerClass;
 
 
-// test that we can get data from the backend
 const BACKEND_URL = 'http:localhost:3000';
-// fetch(`${BACKEND_URL}/users`)
-//   .then(response => response.json())
-//   .then(parsedResponse => console.log(parsedResponse));
+
 
 document.addEventListener('DOMContentLoaded', () => {
   console.log("DOM is Loaded");
-  fetchQuestions(`${BACKEND_URL}/questions`) 
 })
+
+// function fetchQuestions() {
+//   fetch(BACKEND_URL + '/questions')
+//   .then(response => response.json())
+//   .then(parsedResponse => {
+//     console.log(parsedResponse)
+//     parsedResponse.forEach(resp => {
+//       let newQuestion = new Question(resp)
+//       // console.log(Question.all)
+//       questions = [...Question.all]
+//     })
+//   });
+// }
+
 
 //this function declaration is hoisted. this is available before this definition because it's hoisted. if changed to an expression it will only be 
 // available to code after 
@@ -161,21 +171,17 @@ myLoginForm.addEventListener('submit', function(event) {
 })
     
 
-  //get all the questions from db
-function fetchQuestions(url) {
-    fetch(url)
-    .then(response => response.json())
-    .then(parsedResponse => {
-      console.log(parsedResponse)
-      parsedResponse.forEach(resp => {
-        let newQuestion = new Question(resp)
-        // console.log(Question.all)
-        questions = [...Question.all]
-        //questions is set using Question.all from class 
-      })
-    });
 
-  }
+function fetchMainDeck() {
+  event.preventDefault()
+
+  fetch(BACKEND_URL + '/decks/12')
+  .then(response => response.json())
+  .then(json => {
+    console.log(json)
+    debugger
+  })
+}
 
   // fetch to add question to users deck 
 function addQuestionToDeck(event) {  // processes click on add button (makes patch req. to backend to update the deck with a question deck.questions << question )
@@ -220,7 +226,6 @@ function removeQuestionFromDeck(event) {
     .then(response => response.json())
     .then(json => { 
       let usersDeck = Deck.findById(json.id)
-      // let usersDeck = new Deck(json)
       // debugger - everything below this should be DRYed up with code from addtoDeck
       let deckQuestions = usersDeck.questions
       let ids = deckQuestions.map(ques => ques.id)
@@ -244,9 +249,9 @@ addButton.addEventListener('click', function(e) {
   addQuestionToDeck(e)
 })
 
-// function seeDeck(event) {
+// function seeDeck() {
 //   event.preventDefault()
-//   let deckId = e.target.dataset.id
+//   let deckId = event.target.dataset.id
 
 //   fetch(BACKEND_URL + `/decks/${deckId}`)
 //   .then(response => response.json())
@@ -256,6 +261,7 @@ addButton.addEventListener('click', function(e) {
 //     let ids = deckQuestions.map(ques => ques.id)
 //     function filterById(id){return Question.findById(id)}
 //     let userQuestions = ids.map(filterById)
+//     header.innerHTML = usersDeck.name
 //     startDeck(userQuestions)
 //     })
     
@@ -263,70 +269,107 @@ addButton.addEventListener('click', function(e) {
 //     removeButton.disabled = false 
 //     seeButton.disabled = true 
 //     mainButton.disabled = false
-//     header.innerHTML = "Your Deck"
 // }
 
 
 seeButton.addEventListener('click', function(e) {
-  let deckId = e.target.dataset.id
-  fetch(BACKEND_URL + `/decks/${deckId}`)
-  .then(response => response.json())
-  .then(json => {
-    let usersDeck = new Deck(json)
-    let deckQuestions = usersDeck.questions
-    let ids = deckQuestions.map(ques => ques.id)
-    function filterById(id){return Question.findById(id)}
-    let userQuestions = ids.map(filterById)
-    startDeck(userQuestions)
-  
-    })
-    
-    addButton.disabled = true 
-    removeButton.disabled = false 
-    seeButton.disabled = true 
-    mainButton.disabled = false
-    header.innerHTML = "Your Deck"
+  seeDeck()
 })
 
 
+
 mainButton.addEventListener('click', function(e){
-  
-  startDeck(questions)
+  //backToMain()
+  seeDeck()
   addButton.disabled = false
   removeButton.disabled = true
   seeButton.disabled = false
   mainButton.disabled = true
-  header.innerHTML = "Prep Deck"
+  
 })
 
 // Going through the deck of questions 
 // const startDeck = () => {
 //   getNewQuestion()
 // }
-function startDeck(questions) {
-  getNewQuestion(questions)
-  nextButton.addEventListener('click', function(e) {
-    choices.forEach(choice => choice.parentElement.classList.remove(answerClass))
-    explanation.classList.add('hide')
-    getNewQuestion(questions)
-     
-  })
-  
-}
+//start deck function fetches the deck using the buttons data id(which is a deck id), creates a deck obj from response, creates q objects to pass through get new question. 
+function startDeck() {
+  event.preventDefault()
+  const deck_id = event.target.dataset.id 
 
+  fetch(BACKEND_URL + `/decks/${deck_id}`)
+  .then(response => response.json())
+  .then(json => {
+      console.log(json)
+      debugger
+      let deck = new Deck(json)
+      deck.startDeck() 
+    //  in Deck.js startDeck() {
+    //     let questions = this.questions.map(ques => new Question(ques))
+    //     getNewQuestion(questions)
+    //     nextButton.addEventListener('click', function(e) {
+    //       choices.forEach(choice => choice.parentElement.classList.remove(answerClass))
+    //       explanation.classList.add('hide')
+    //       getNewQuestion(questions)
+           
+    //     })
+        
+    // }
+    })
+  }
+
+  //fetches a deck but finds questions objs by id because they have already been created on frontend in startDeck
+  function seeDeck() {
+    event.preventDefault()
+    const deck_id = event.target.dataset.id 
+  
+    fetch(BACKEND_URL + `/decks/${deck_id}`)
+    .then(response => response.json())
+    .then(json => {
+        console.log(json)
+        debugger
+        let deck = new Deck(json)
+        deck.seeDeck() 
+        addButton.disabled = true 
+        removeButton.disabled = false 
+        seeButton.disabled = true 
+        mainButton.disabled = false
+        // in deck.js 
+        //seeDeck() {
+        //   header.innerHTML = this.name
+        //   let ids = this.questions.map(ques => ques.id)
+        //   function filterById(id){return Question.findById(id)}
+        //   let userQuestions = ids.map(filterById)
+        //   let cloneQuestions = [...userQuestions]
+        //   debugger
+        //   getNewQuestion(cloneQuestions)
+        //   nextButton.addEventListener('click', function(e) {
+        //     choices.forEach(choice => choice.parentElement.classList.remove(answerClass))
+        //     explanation.classList.add('hide')
+        //     getNewQuestion(cloneQuestions)
+             
+        //   })
+          
+      // }
+      })
+    }
+  
 
 function getNewQuestion(questions) {
   if (questions.length > 0) {
     const questionIndex = Math.floor(Math.random() * questions.length)
     currentQuestion = questions[questionIndex]
-    //.render is defined in the question.js class file
     currentQuestion.render()
     questions.splice(questionIndex, 1)
     acceptingAnswers = true
-   
+    
+    nextButton.addEventListener('click', function(e) {
+      choices.forEach(choice => choice.parentElement.classList.remove(answerClass))
+      explanation.classList.add('hide')
+      getNewQuestion(questions)
+    })
   }
 }
-
 
 
 //add event listeners to each choice to compare if answer is correct and load another answer 
@@ -366,8 +409,8 @@ choices.forEach(choice => {
 
 
 // on clicking on start startButton, deck begins with first question displayed. rename deck id later 
-startButton.addEventListener('click', function(e) {
-  e.target.classList.add('hide')
+startButton.addEventListener('click', function(event) {
+  event.target.classList.add('hide')
   userDisplayDiv.classList.add('hide')
   deck.classList.remove('hide')
   nextButton.classList.remove('hide')
@@ -376,7 +419,7 @@ startButton.addEventListener('click', function(e) {
   mainButton.classList.remove('hide')
   mainButton.disabled = true
   seeButton.classList.remove('hide')
-  startDeck(questions);
+  startDeck();
   // load questions into cards here 
 })
 

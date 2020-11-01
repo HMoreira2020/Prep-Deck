@@ -17,7 +17,7 @@ class User {
         seeButton.dataset["id"] = this.deck_id
         removeButton.dataset["id"] = this.deck_id
         addButton.dataset["id"] = this.deck_id
-        addButton.innerHTML = `Add to ${this.first_name}'s Deck`
+        addButton.innerHTML = `Add to ${this.deck_name}`
         userDisplayDiv.append(newUserP)
     }
 
