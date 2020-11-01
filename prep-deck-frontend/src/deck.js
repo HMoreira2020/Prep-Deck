@@ -27,13 +27,6 @@ class Deck {
         console.log(cloneQuestions)
         debugger
         getNewQuestion(cloneQuestions)
-        // nextButton.addEventListener('click', function(e) {
-        //   choices.forEach(choice => choice.parentElement.classList.remove(answerClass))
-        //   explanation.classList.add('hide')
-        //   getNewQuestion(cloneQuestions)
-           
-        // })
-        
     }
 
     static findById(id) {

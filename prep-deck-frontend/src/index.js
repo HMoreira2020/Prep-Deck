@@ -307,7 +307,6 @@ function startDeck() {
   .then(response => response.json())
   .then(json => {
       console.log(json)
-      debugger
       let deck = new Deck(json)
       deck.startDeck() 
     //  in Deck.js startDeck() {
@@ -333,7 +332,6 @@ function startDeck() {
     .then(response => response.json())
     .then(json => {
         console.log(json)
-        debugger
         let deck = new Deck(json)
         deck.seeDeck() 
         
@@ -356,7 +354,12 @@ function startDeck() {
       // }
       })
     }
+
+  function clearChoices(){
+    choices.forEach(choice => choice.parentElement.classList.remove(answerClass))
+    explanation.classList.add('hide')
   
+  }
 
 function getNewQuestion(questions) {
   if (questions.length > 0) {
@@ -367,11 +370,12 @@ function getNewQuestion(questions) {
     acceptingAnswers = true
     
     nextButton.addEventListener('click', function(e) {
-      choices.forEach(choice => choice.parentElement.classList.remove(answerClass))
-      explanation.classList.add('hide')
+      clearChoices()
+      console.log(questions.length)
+      console.log(questions)
       getNewQuestion(questions)
     })
-  }
+  } 
 }
 
 
