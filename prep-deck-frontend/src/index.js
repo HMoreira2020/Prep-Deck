@@ -84,23 +84,6 @@ lis.forEach(li => {
 })
 
 
-// function postUser(url, data) {
-//   fetch(url, {
-//     method: 'POST',
-//     headers: {
-//       'Accept': 'application/json',
-//       'Content-Type': 'application/json'
-//     },
-//       body: JSON.stringify(data)
-//     })
-//     .then(response => response.json())
-//     .then(json => {
-//       console.log(json)
-//       let newUser = new User(json)
-//       handleUserLogin(newUser, myForm)
-//     })
-// }
-
 
 function handleUserLogin(obj, form) {
   form.style.display = "none"
@@ -110,13 +93,9 @@ function handleUserLogin(obj, form) {
 }
 
 
-//event listener on signup form to send data to users#create and create user
-//also hides sign in form and displays main prep deck 
-const myForm = document.getElementById('myForm');
-myForm.addEventListener('submit', function(e) {
-    e.preventDefault();
-    const usersUrl = "http://localhost:3000/users"
-    
+function createUser() {
+    event.preventDefault();
+  
     let formData = {
         first_name: document.getElementById("user-firstName").value,
         last_name: document.getElementById("user-lastName").value,
@@ -124,23 +103,58 @@ myForm.addEventListener('submit', function(e) {
         password: document.getElementById("user-password").value
       }
     
-      // postUser(usersUrl, formData)
-      fetch(usersUrl, {
+    const configObj = {
         method: 'POST',
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json', 
         },
           body: JSON.stringify(formData)
-        })
+    }
+    
+     
+      fetch(BACKEND_URL + '/users', configObj)
         .then(response => response.json())
         .then(json => {
           console.log(json)
           let newUser = new User(json)
           handleUserLogin(newUser, myForm)
         })
+}
 
-})
+//event listener on signup form to send data to users#create and create user
+//also hides sign in form and displays main prep deck 
+const myForm = document.getElementById('myForm');
+myForm.addEventListener('submit', function(event) {
+    createUser()
+  })
+  // e.preventDefault();
+    // const usersUrl = "http://localhost:3000/users"
+    
+    // let formData = {
+    //     first_name: document.getElementById("user-firstName").value,
+    //     last_name: document.getElementById("user-lastName").value,
+    //     email: document.getElementById("user-email").value,
+    //     password: document.getElementById("user-password").value
+    //   }
+    
+    //   // postUser(usersUrl, formData)
+    //   fetch(usersUrl, {
+    //     method: 'POST',
+    //     headers: {
+    //       'Accept': 'application/json',
+    //       'Content-Type': 'application/json', 
+    //     },
+    //       body: JSON.stringify(formData)
+    //     })
+    //     .then(response => response.json())
+    //     .then(json => {
+    //       console.log(json)
+    //       let newUser = new User(json)
+    //       handleUserLogin(newUser, myForm)
+    //     })
+
+// })
 
 const myLoginForm = document.getElementById('myLoginForm');
 myLoginForm.addEventListener('submit', function(e) {
