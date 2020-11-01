@@ -135,7 +135,6 @@ myForm.addEventListener('submit', function(e) {
         })
         .then(response => response.json())
         .then(json => {
-          debugger
           console.log(json)
           let newUser = new User(json)
           handleUserLogin(newUser, myForm)
@@ -234,7 +233,6 @@ function removeQuestionFromDeck(event) {
       // let usersDeck = new Deck(json)
       // debugger - everything below this should be DRYed up with code from addtoDeck
       let deckQuestions = usersDeck.questions
-      debugger
       let ids = deckQuestions.map(ques => ques.id)
       function filterById(id){return Question.findById(id)}
       let userQuestions = ids.map(filterById)
@@ -281,7 +279,6 @@ addButton.addEventListener('click', function(e) {
 
 seeButton.addEventListener('click', function(e) {
   let deckId = e.target.dataset.id
-  debugger
   fetch(BACKEND_URL + `/decks/${deckId}`)
   .then(response => response.json())
   .then(json => {
@@ -318,6 +315,13 @@ mainButton.addEventListener('click', function(e){
 // }
 function startDeck(questions) {
   getNewQuestion(questions)
+  nextButton.addEventListener('click', function(e) {
+    choices.forEach(choice => choice.parentElement.classList.remove(answerClass))
+    explanation.classList.add('hide')
+    getNewQuestion(questions)
+     
+  })
+  
 }
 
 
@@ -329,6 +333,7 @@ function getNewQuestion(questions) {
     currentQuestion.render()
     questions.splice(questionIndex, 1)
     acceptingAnswers = true
+   
   }
 }
 
@@ -362,12 +367,12 @@ choices.forEach(choice => {
 })
 
 //when next is hit, remove the answerClass from the choices and get a new question from questions array 
-nextButton.addEventListener('click', function(e) {
-  choices.forEach(choice => choice.parentElement.classList.remove(answerClass))
-  explanation.classList.add('hide')
-  getNewQuestion(questions)
+// nextButton.addEventListener('click', function(e) {
+//   choices.forEach(choice => choice.parentElement.classList.remove(answerClass))
+//   explanation.classList.add('hide')
+//   getNewQuestion(questions)
    
-})
+// })
 
 
 // on clicking on start startButton, deck begins with first question displayed. rename deck id later 
