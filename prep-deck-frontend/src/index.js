@@ -125,65 +125,41 @@ function createUser() {
 //event listener on signup form to send data to users#create and create user
 //also hides sign in form and displays main prep deck 
 const myForm = document.getElementById('myForm');
-myForm.addEventListener('submit', function(event) {
-    createUser()
-  })
-  // e.preventDefault();
-    // const usersUrl = "http://localhost:3000/users"
-    
-    // let formData = {
-    //     first_name: document.getElementById("user-firstName").value,
-    //     last_name: document.getElementById("user-lastName").value,
-    //     email: document.getElementById("user-email").value,
-    //     password: document.getElementById("user-password").value
-    //   }
-    
-    //   // postUser(usersUrl, formData)
-    //   fetch(usersUrl, {
-    //     method: 'POST',
-    //     headers: {
-    //       'Accept': 'application/json',
-    //       'Content-Type': 'application/json', 
-    //     },
-    //       body: JSON.stringify(formData)
-    //     })
-    //     .then(response => response.json())
-    //     .then(json => {
-    //       console.log(json)
-    //       let newUser = new User(json)
-    //       handleUserLogin(newUser, myForm)
-    //     })
+myForm.addEventListener('submit', createUser)
 
-// })
 
-const myLoginForm = document.getElementById('myLoginForm');
-myLoginForm.addEventListener('submit', function(e) {
-    e.preventDefault();
-    const loginUrl = "http://localhost:3000/login"
-    
-    let formData = {
-        email: document.getElementById("login-email").value,
-        password: document.getElementById("login-password").value
-      }
-    
-      // postUser(loginUrl, formData)
-    fetch(loginUrl, {
+function loginUser() {
+  event.preventDefault();
+
+  let formData = {
+    email: document.getElementById("login-email").value,
+    password: document.getElementById("login-password").value
+  }
+
+  const configObj = {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json', 
       },
         body: JSON.stringify(formData)
-      })
-      .then(response => response.json())
-      .then(json => {
-        console.log(json)
-        let newUser = new User(json)
-        handleUserLogin(newUser, myLoginForm)
-      })
+  }
 
+  fetch(BACKEND_URL + '/login', configObj)
+    .then(response => response.json())
+    .then(json => {
+      console.log(json)
+      let newUser = new User(json)
+      handleUserLogin(newUser, myLoginForm)
+    })
+
+}
+
+const myLoginForm = document.getElementById('myLoginForm');
+myLoginForm.addEventListener('submit', function(event) {
+  loginUser()
 })
-
+    
 
   //get all the questions from db
 function fetchQuestions(url) {
