@@ -20,7 +20,7 @@ let currentQuestion = {}
 let acceptingAnswers = false;
 let questionCounter = 0
 let availableQuestions = []
-// let questions;
+let cloneQuestions;
 let answerClass;
 
 
@@ -30,19 +30,6 @@ const BACKEND_URL = 'http:localhost:3000';
 document.addEventListener('DOMContentLoaded', () => {
   console.log("DOM is Loaded");
 })
-
-// function fetchQuestions() {
-//   fetch(BACKEND_URL + '/questions')
-//   .then(response => response.json())
-//   .then(parsedResponse => {
-//     console.log(parsedResponse)
-//     parsedResponse.forEach(resp => {
-//       let newQuestion = new Question(resp)
-//       // console.log(Question.all)
-//       questions = [...Question.all]
-//     })
-//   });
-// }
 
 
 //this function declaration is hoisted. this is available before this definition because it's hoisted. if changed to an expression it will only be 
@@ -170,18 +157,6 @@ myLoginForm.addEventListener('submit', function(event) {
 })
     
 
-
-function fetchMainDeck() {
-  event.preventDefault()
-
-  fetch(BACKEND_URL + '/decks/12')
-  .then(response => response.json())
-  .then(json => {
-    console.log(json)
-    debugger
-  })
-}
-
   // fetch to add question to users deck 
 function addQuestionToDeck(event) {  // processes click on add button (makes patch req. to backend to update the deck with a question deck.questions << question )
   event.preventDefault()
@@ -251,7 +226,6 @@ addButton.addEventListener('click', function(e) {
 
 
 seeButton.addEventListener('click', function(e) {
-  debugger
   seeDeck()
   addButton.disabled = true
   removeButton.disabled = false
@@ -262,9 +236,7 @@ seeButton.addEventListener('click', function(e) {
 
 
 mainButton.addEventListener('click', function(e){
-  debugger
-  //backToMain()
-  seeDeck()
+  startDeck()
   addButton.disabled = false
   removeButton.disabled = true
   seeButton.disabled = false
@@ -284,12 +256,7 @@ function startDeck() {
       console.log(json)
       let deck = new Deck(json)
       deck.startDeck() 
-      nextButton.addEventListener('click', function(e) {
-        clearChoices()
-        getNewQuestion(availableQuestions)
-        
-      })
-
+    //set cloneQuestions
     })
   }
 
@@ -304,12 +271,7 @@ function seeDeck() {
     console.log(json)
     let deck = new Deck(json)
     deck.seeDeck() 
-    nextButton.addEventListener('click', function(e) {
-      clearChoices()
-      getNewQuestion(availableQuestions)
-      
-    })
-    
+    // set cloneQuestions
    })
 }
 
@@ -321,16 +283,15 @@ function clearChoices(){
 
 function getNewQuestion(questions) {
   if (questions.length > 0) {
+    console.log(questions)
     const questionIndex = Math.floor(Math.random() * questions.length)
     currentQuestion = questions[questionIndex]
     currentQuestion.render()
     questions.splice(questionIndex, 1)
     acceptingAnswers = true
-    availableQuestions = questions
-    
-  } 
+    // availableQuestions = questions
+  }
 }
-
 
 
 //add event listeners to each choice to compare if answer is correct and load another answer 
@@ -372,6 +333,11 @@ function begin() {
   mainButton.disabled = true
   seeButton.classList.remove('hide')
   startDeck()
+  nextButton.addEventListener('click', function(e) {
+    clearChoices()
+    getNewQuestion(cloneQuestions)
+    
+  })
 }
 
 

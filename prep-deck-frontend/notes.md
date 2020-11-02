@@ -11,4 +11,8 @@ on click of each of those run startDeck with the questions set to that deck's qu
 everything else should continue to work 
 - 
 
-refactor so that when next button is clicked, it doesn't call the main deck to go through (call it inside the see funciton?)
+conditional for disabling next button when there are no more questions to go through 
+next refactor add(working) and remove(working besides prevent default error)
+
+add more questions to db
+https://www.w3schools.com/js/js_quiz.asp
