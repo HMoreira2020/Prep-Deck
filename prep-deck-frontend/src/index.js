@@ -29,8 +29,23 @@ const BACKEND_URL = 'http:localhost:3000';
 
 document.addEventListener('DOMContentLoaded', () => {
   console.log("DOM is Loaded");
+  fetchMain()
 })
 
+
+function fetchMain() {
+  event.preventDefault()
+
+  fetch(BACKEND_URL + `/decks/12`)
+  .then(response => response.json())
+  .then(json => {
+      console.log(json)
+      let deck = new Deck(json)
+      deck.startDeck() 
+      nextButton.disabled = false 
+    //set cloneQuestions
+    })
+  }
 
 //this function declaration is hoisted. this is available before this definition because it's hoisted. if changed to an expression it will only be 
 // available to code after 
@@ -247,7 +262,7 @@ mainButton.addEventListener('click', function(e){
 
 
 //start deck function fetches the deck using the buttons data id(which is a deck id), creates a deck obj from response, creates q objects to pass through get new question. 
-async function startDeck() {
+function startDeck() {
   event.preventDefault()
   const deck_id = event.target.dataset.id 
 
@@ -328,6 +343,7 @@ choices.forEach(choice => {
 })
 
 function begin() {
+  // startDeck() 
   event.target.classList.add('hide')
   userDisplayDiv.classList.add('hide')
   deck.classList.remove('hide')
@@ -346,10 +362,7 @@ function begin() {
 
 
 
-startButton.addEventListener('click', async function(e) {
-  await startDeck() 
-  begin()
-})
+startButton.addEventListener('click', begin)
 
 
 
