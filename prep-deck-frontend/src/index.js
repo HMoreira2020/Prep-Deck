@@ -247,7 +247,7 @@ mainButton.addEventListener('click', function(e){
 
 
 //start deck function fetches the deck using the buttons data id(which is a deck id), creates a deck obj from response, creates q objects to pass through get new question. 
-function startDeck() {
+async function startDeck() {
   event.preventDefault()
   const deck_id = event.target.dataset.id 
 
@@ -257,6 +257,7 @@ function startDeck() {
       console.log(json)
       let deck = new Deck(json)
       deck.startDeck() 
+      nextButton.disabled = false 
     //set cloneQuestions
     })
   }
@@ -272,6 +273,7 @@ function seeDeck() {
     console.log(json)
     let deck = new Deck(json)
     deck.seeDeck() 
+    nextButton.disabled = false 
     // set cloneQuestions
    })
 }
@@ -290,6 +292,9 @@ function getNewQuestion(questions) {
     questions.splice(questionIndex, 1)
     acceptingAnswers = true
     // availableQuestions = questions
+  }
+  if (questions.length === 0) { //this works bc a q is spliced before this line 
+      nextButton.disabled = true
   }
 }
 
@@ -323,7 +328,6 @@ choices.forEach(choice => {
 })
 
 function begin() {
-  startDeck()
   event.target.classList.add('hide')
   userDisplayDiv.classList.add('hide')
   deck.classList.remove('hide')
@@ -342,7 +346,10 @@ function begin() {
 
 
 
-startButton.addEventListener('click', begin )
+startButton.addEventListener('click', async function(e) {
+  await startDeck() 
+  begin()
+})
 
 
 
