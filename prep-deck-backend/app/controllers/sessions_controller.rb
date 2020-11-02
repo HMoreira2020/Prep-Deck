@@ -9,6 +9,7 @@ class SessionsController < ApplicationController
             render json: UserSerializer.new(user).to_serialized_json, status: :created 
         else
             render json: { errors: user.errors.full_messages }, status: :unauthorized
+            
         end
     end 
 
