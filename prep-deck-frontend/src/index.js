@@ -200,12 +200,13 @@ function removeQuestionFromDeck(event) {
     .then(response => response.json())
     .then(json => { 
       let usersDeck = Deck.findById(json.id)
+      usersDeck.seeDeck()
       // debugger - everything below this should be DRYed up with code from addtoDeck
-      let deckQuestions = usersDeck.questions
-      let ids = deckQuestions.map(ques => ques.id)
-      function filterById(id){return Question.findById(id)}
-      let userQuestions = ids.map(filterById)
-      startDeck(userQuestions)
+      // let deckQuestions = usersDeck.questions
+      // let ids = deckQuestions.map(ques => ques.id)
+      // function filterById(id){return Question.findById(id)}
+      // let userQuestions = ids.map(filterById)
+      // startDeck(userQuestions)
      
           //how to let user know question was removed = message display from backend 
       })
@@ -283,7 +284,6 @@ function clearChoices(){
 
 function getNewQuestion(questions) {
   if (questions.length > 0) {
-    console.log(questions)
     const questionIndex = Math.floor(Math.random() * questions.length)
     currentQuestion = questions[questionIndex]
     currentQuestion.render()
@@ -323,6 +323,7 @@ choices.forEach(choice => {
 })
 
 function begin() {
+  startDeck()
   event.target.classList.add('hide')
   userDisplayDiv.classList.add('hide')
   deck.classList.remove('hide')
@@ -332,7 +333,6 @@ function begin() {
   mainButton.classList.remove('hide')
   mainButton.disabled = true
   seeButton.classList.remove('hide')
-  startDeck()
   nextButton.addEventListener('click', function(e) {
     clearChoices()
     getNewQuestion(cloneQuestions)

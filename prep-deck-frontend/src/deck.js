@@ -8,17 +8,6 @@ class Deck {
         Deck.all.push(this)
     }
 
-    // createQuestions() {
-    //     return this.questions.map(ques => new Question(ques))
-    // }
-
-
-    // findQuestions() {
-    //     let ids = this.questions.map(ques => ques.id)
-    //     function filterById(id){return Question.findById(id)}
-    //     return ids.map(filterById)
-    // }
-
     //deck.startDeck()
     startDeck() {
         header.innerHTML = this.name
@@ -29,7 +18,6 @@ class Deck {
         getNewQuestion(cloneQuestions)
     }
 
-    
 
     seeDeck() {
         header.innerHTML = this.name

@@ -10,9 +10,9 @@ if you wanted to do multiple topics, replace start button with multiple buttons 
 on click of each of those run startDeck with the questions set to that deck's questions
 everything else should continue to work 
 - 
-
+work on remove from deck 
 conditional for disabling next button when there are no more questions to go through 
-next refactor add(working) and remove(working besides prevent default error)
+remove(working besides prevent default error)
 
 add more questions to db
 https://www.w3schools.com/js/js_quiz.asp
