@@ -42,6 +42,9 @@ function fetchMain() {
       deck.startDeck() 
       nextButton.disabled = false 
     })
+    .catch(function(error) {
+      console.log(error.message)
+    })
   }
 
 //this function declaration is hoisted. this is available before this definition because it's hoisted. if changed to an expression it will only be 
@@ -128,6 +131,10 @@ function createUser() {
           let newUser = new User(json)
           handleUserLogin(newUser, myForm)
         })
+        .catch(function(error) {
+          alert("Invalid entry!")
+          console.log(error.message)
+        })
 }
 
 
@@ -156,6 +163,11 @@ function loginUser() {
       let newUser = new User(json)
       handleUserLogin(newUser, myLoginForm)
     })
+    .catch(function(error) {
+      alert("Invalid email or password")
+      console.log(error.message)
+    })
+  
 }
   
 function addQuestionToDeck(event) {  // processes click on add button (makes patch req. to backend to update the deck with a question deck.questions << question )
@@ -172,13 +184,37 @@ function addQuestionToDeck(event) {  // processes click on add button (makes pat
       }
   }
 
+  function handleError(error) {
+    if (typeof error.json === "function") {
+      error.json().then(jsonError => {
+          console.log(jsonError.exception);
+          alert("Question already in deck!")
+      }).catch(genericError => {
+          console.log("Generic error from API");
+          console.log(error.statusText);
+      });
+    } else {
+      console.log("Fetch error");
+      console.log(error);
+    }
+  }
+
   fetch(BACKEND_URL + `/decks/${deckId}`, configObj)
-      .then(response => response.json())
+      .then(response => {
+        if (!response.ok) {
+          return Promise.reject(response)
+        }
+          return response.json()
+      })
       .then(deck_json => { 
+        console.log("Success")
+        alert("Success!")
         let userDeck = new Deck(deck_json)
           //how to let user know question was added = message display from backend 
       })
-      .catch(err => console.log(err))
+      .catch(error => {
+        handleError(error)
+      })
   
 }
 
@@ -199,10 +235,15 @@ function removeQuestionFromDeck(event) {
     fetch(BACKEND_URL + `/decks/${event.target.dataset.id}`, configObj)
     .then(response => response.json())
     .then(json => { 
+      console.log("Success")
+      alert("Success!")
       let usersDeck = new Deck(json)
       usersDeck.seeDeck()
  
       }) 
+    .catch(error => {
+      handleError(error)
+    })
 }
 
 
@@ -217,6 +258,9 @@ function startDeck() {
       let deck = new Deck(json)
       deck.startDeck() 
       nextButton.disabled = false 
+    })
+    .catch(function(error) {
+      console.log(error.message)
     })
   }
 
