@@ -351,23 +351,27 @@ mainButton.addEventListener('click',  e => {
   mainButton.disabled = true
   
 })
+ 
+const checkAnswer = (event) => {
+  if (acceptingAnswers) {
+    acceptingAnswers = false
+    const selectedAnswer = event.target 
+    const answerPrefix = selectedAnswer.previousElementSibling.innerHTML
+    let answerClass = answerPrefix === currentQuestion.correct_answer ? "correct" : "incorrect"
+    selectedAnswer.parentElement.classList.add(answerClass)
+
+    explanation.classList.remove('hide')
+    explanation.innerHTML = currentQuestion.explanation 
+  }
+}
 
 choices.forEach(choice => {
   choice.addEventListener("click", e => {
-    if (acceptingAnswers) {
-      acceptingAnswers = false
-      const selectedAnswer = e.target 
-      const answerPrefix = selectedAnswer.previousElementSibling.innerHTML
-
-      let answerClass = answerPrefix === currentQuestion.correct_answer ? "correct" : "incorrect"
-    
-      selectedAnswer.parentElement.classList.add(answerClass)
-  
-      explanation.classList.remove('hide')
-      explanation.innerHTML = currentQuestion.explanation 
-    }
+      checkAnswer(e)
   })
 })
+
+
 
 startButton.addEventListener('click', begin)
 
