@@ -13,9 +13,9 @@ class SessionsController < ApplicationController
         end
     end 
 
-    def destroy
+    # def destroy
     
-    end 
+    # end 
 
     def user_params
         params.require(:user).permit(:email, :password)

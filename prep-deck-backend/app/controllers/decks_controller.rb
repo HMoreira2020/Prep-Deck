@@ -2,7 +2,7 @@ class DecksController < ApplicationController
     before_action :set_deck, only: [:show, :update, :destroy]
     before_action :set_question, only: [:update, :destroy]
 
-    #Get /decks/9 
+    #Get /decks/9
     def show
         render json: DeckSerializer.new(@deck).to_serialized_json
     end 

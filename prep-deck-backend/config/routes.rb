@@ -1,8 +1,7 @@
 Rails.application.routes.draw do
-  resources :decks
-  #put/patch '/decks/:deck_id', to 'decks#update' is included in resources so I don't need to define it. 
-  resources :questions
-  resources :users
+  resources :decks, only: [:show, :update, :destroy]
+  resources :questions, only: [:index]
+  resources :users, only: [:index, :create]
   post '/login', to: 'sessions#create'
   # get '/profile', to: 'users#show'
   # get '/logout', to: 'sessions#destroy'
