@@ -10,8 +10,6 @@ const header = document.querySelector('h1')
 const explanation = document.getElementById('explanation')
 const explanationContainer = document.getElementById('explanation-container')
 const topic = document.getElementById('topic')
-
-
 const deck = document.getElementById('deck')
 const questionDiv = document.getElementById('question')
 const questionContent2 = document.getElementById('question-content-2')
@@ -43,7 +41,6 @@ function fetchMain() {
       let deck = new Deck(json)
       deck.startDeck() 
       nextButton.disabled = false 
-   
     })
   }
 
@@ -133,10 +130,6 @@ function createUser() {
         })
 }
 
-//event listener on signup form to send data to users#create and create user
-//also hides sign in form and displays main prep deck 
-const myForm = document.getElementById('myForm');
-// myForm.addEventListener('submit', createUser)
 
 
 function loginUser() {
@@ -163,16 +156,8 @@ function loginUser() {
       let newUser = new User(json)
       handleUserLogin(newUser, myLoginForm)
     })
-
 }
-
-const myLoginForm = document.getElementById('myLoginForm');
-myLoginForm.addEventListener('submit', function(event) {
-  loginUser()
-})
-    
-
-  // fetch to add question to users deck 
+  
 function addQuestionToDeck(event) {  // processes click on add button (makes patch req. to backend to update the deck with a question deck.questions << question )
   event.preventDefault()
   const deckId = event.target.dataset.id
@@ -215,55 +200,12 @@ function removeQuestionFromDeck(event) {
     .then(response => response.json())
     .then(json => { 
       let usersDeck = new Deck(json)
-      //must fetch the deck that has that question removed and disply it. 
-      // let usersDeck = Deck.findById(json.id)
       usersDeck.seeDeck()
-      // debugger - everything below this should be DRYed up with code from addtoDeck
-      // let deckQuestions = usersDeck.questions
-      // let ids = deckQuestions.map(ques => ques.id)
-      // function filterById(id){return Question.findById(id)}
-      // let userQuestions = ids.map(filterById)
-      // startDeck(userQuestions)
-     
-          //how to let user know question was removed = message display from backend 
-      })
-  
-    
+ 
+      }) 
 }
 
-removeButton.addEventListener('click', function(e) {
-  removeQuestionFromDeck(e)
-})
 
-
-
-addButton.addEventListener('click', function(e) {
-  addQuestionToDeck(e)
-})
-
-
-
-seeButton.addEventListener('click', function(e) {
-  seeDeck()
-  addButton.disabled = true
-  removeButton.disabled = false
-  seeButton.disabled = true 
-  mainButton.disabled = false
-})
-
-
-
-mainButton.addEventListener('click', function(e){
-  startDeck()
-  addButton.disabled = false
-  removeButton.disabled = true
-  seeButton.disabled = false
-  mainButton.disabled = true
-  
-})
-
-
-//start deck function fetches the deck using the buttons data id(which is a deck id), creates a deck obj from response, creates q objects to pass through get new question. 
 function startDeck() {
   event.preventDefault()
   const deck_id = event.target.dataset.id 
@@ -275,11 +217,10 @@ function startDeck() {
       let deck = new Deck(json)
       deck.startDeck() 
       nextButton.disabled = false 
-    //set cloneQuestions
     })
   }
 
-  //fetches a deck but finds questions objs by id because they have already been created on frontend in startDeck
+
 function seeDeck() {
   event.preventDefault()
   const deck_id = event.target.dataset.id 
@@ -291,15 +232,9 @@ function seeDeck() {
     let deck = new Deck(json)
     deck.seeDeck() 
     nextButton.disabled = false 
-    // set cloneQuestions
    })
 }
 
-function clearChoices(){
-  choices.forEach(choice => choice.parentElement.classList.remove(answerClass))
-  explanation.classList.add('hide')
-  
-}
 
 function getNewQuestion(questions) {
   if (questions.length > 0) {
@@ -308,45 +243,21 @@ function getNewQuestion(questions) {
     currentQuestion.render()
     questions.splice(questionIndex, 1)
     acceptingAnswers = true
-    // availableQuestions = questions
   }
-  if (questions.length == 0) { //this works bc a q is spliced before this line 
+  if (questions.length == 0) { 
       nextButton.disabled = true
       mainButton.disabled = false
   }
 }
 
 
-//add event listeners to each choice to compare if answer is correct and load another answer 
-choices.forEach(choice => {
-  choice.addEventListener("click", function(e) {
-    if (acceptingAnswers) {
-      acceptingAnswers = false
-      const selectedAnswer = e.target 
-      const answerPrefix = selectedAnswer.previousElementSibling.innerHTML
-
-      answerClass = answerPrefix === currentQuestion.correct_answer ? "correct" : "incorrect"
-      //define which class to apply if user selects correct or incorrect answer 
-
-      //apply the class
-      selectedAnswer.parentElement.classList.add(answerClass)
+function clearChoices(){
+  choices.forEach(choice => choice.parentElement.classList.remove(answerClass))
+  explanation.classList.add('hide')
   
-      explanation.classList.remove('hide')
-      explanation.innerHTML = currentQuestion.explanation 
-
-      // explanationP.innerHTML = currentQuestion.explanation ? currentQuestion.explanation : ""
-      //keeping track of selected answer vs correct answer
-      // console.log(selectedAnswer)
-      // console.log(e.target.previousElementSibling.innerHTML)
-      // console.log(answerPrefix === currentQuestion.correct_answer)
-      // console.log(questions.length)
-      
-    }
-  })
-})
+}
 
 function begin() {
-  // startDeck() 
   event.target.classList.add('hide')
   userDisplayDiv.classList.add('hide')
   deck.classList.remove('hide')
@@ -356,6 +267,7 @@ function begin() {
   mainButton.classList.remove('hide')
   mainButton.disabled = true
   seeButton.classList.remove('hide')
+  
   nextButton.addEventListener('click', function(e) {
     clearChoices()
     getNewQuestion(cloneQuestions)
@@ -363,8 +275,58 @@ function begin() {
   })
 }
 
+const myForm = document.getElementById('myForm');
 myForm.addEventListener('submit', createUser)
 
+const myLoginForm = document.getElementById('myLoginForm');
+myLoginForm.addEventListener('submit', function(event) {
+  loginUser()
+})
+
+removeButton.addEventListener('click', function(e) {
+  removeQuestionFromDeck(e)
+})
+
+
+addButton.addEventListener('click', function(e) {
+  addQuestionToDeck(e)
+})
+
+
+seeButton.addEventListener('click', function(e) {
+  seeDeck()
+  addButton.disabled = true
+  removeButton.disabled = false
+  seeButton.disabled = true 
+  mainButton.disabled = false
+})
+
+
+mainButton.addEventListener('click', function(e){
+  startDeck()
+  addButton.disabled = false
+  removeButton.disabled = true
+  seeButton.disabled = false
+  mainButton.disabled = true
+  
+})
+
+choices.forEach(choice => {
+  choice.addEventListener("click", function(e) {
+    if (acceptingAnswers) {
+      acceptingAnswers = false
+      const selectedAnswer = e.target 
+      const answerPrefix = selectedAnswer.previousElementSibling.innerHTML
+
+      answerClass = answerPrefix === currentQuestion.correct_answer ? "correct" : "incorrect"
+    
+      selectedAnswer.parentElement.classList.add(answerClass)
+  
+      explanation.classList.remove('hide')
+      explanation.innerHTML = currentQuestion.explanation 
+    }
+  })
+})
 
 startButton.addEventListener('click', begin)
 
