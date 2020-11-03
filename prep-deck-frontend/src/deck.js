@@ -39,24 +39,3 @@ class Deck {
 
 Deck.all = [] 
 
-// function seeDeck() {
-//   event.preventDefault()
-//   let deckId = event.target.dataset.id
-
-//   fetch(BACKEND_URL + `/decks/${deckId}`)
-//   .then(response => response.json())
-//   .then(json => {
-//     let usersDeck = new Deck(json)
-//     let deckQuestions = usersDeck.questions
-//     let ids = deckQuestions.map(ques => ques.id)
-//     function filterById(id){return Question.findById(id)}
-//     let userQuestions = ids.map(filterById)
-//     header.innerHTML = usersDeck.name
-//     startDeck(userQuestions)
-//     })
-    
-//     addButton.disabled = true 
-//     removeButton.disabled = false 
-//     seeButton.disabled = true 
-//     mainButton.disabled = false
-// }
