@@ -1,4 +1,4 @@
-<h1>Table of Contents</h1>
+<h1>PREP DECK</h1>
 About the Project<br>
 Built With<br>
 Getting Started<br>
@@ -15,6 +15,7 @@ Simply cylce through the questions.  Add questions to your deck that you need to
 
 This is a Single Page Application project using Ruby on Rails backend API and a frontend built with Javascript, HTML and CSS.  
 
+![Screen Shot 2020-11-02 at 9 40 13 PM](https://user-images.githubusercontent.com/59266501/97950499-4494e880-1d54-11eb-8b27-289312c5c9fc.png)
 
 <h2>Built With</h2>
 Ruby 
