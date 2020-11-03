@@ -43,7 +43,7 @@ function fetchMain() {
       let deck = new Deck(json)
       deck.startDeck() 
       nextButton.disabled = false 
-    //set cloneQuestions
+   
     })
   }
 
@@ -214,7 +214,9 @@ function removeQuestionFromDeck(event) {
     fetch(BACKEND_URL + `/decks/${event.target.dataset.id}`, configObj)
     .then(response => response.json())
     .then(json => { 
-      let usersDeck = Deck.findById(json.id)
+      let usersDeck = new Deck(json)
+      //must fetch the deck that has that question removed and disply it. 
+      // let usersDeck = Deck.findById(json.id)
       usersDeck.seeDeck()
       // debugger - everything below this should be DRYed up with code from addtoDeck
       // let deckQuestions = usersDeck.questions
