@@ -42,15 +42,14 @@ hr {
 .instructions {
   float: left;
   color: rgb(201, 49, 133); 
-  width: 80%;
   text-align: center;
+  margin-left: 1rem;
 }
 
 .container {
   float: left;
   clear: left;
   width: 800px;
-  max-width: 80%;
   background-color: whitesmoke;
   border-radius: 5px;
   padding: 16px;

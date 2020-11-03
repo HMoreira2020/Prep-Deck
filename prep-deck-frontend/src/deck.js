@@ -29,12 +29,12 @@ class Deck {
         getNewQuestion(cloneQuestions)
     }
 
+
     static findById(id) {
       return this.all.find(deck => deck.id === id)
     }
       
 }
-
 
 
 Deck.all = [] 

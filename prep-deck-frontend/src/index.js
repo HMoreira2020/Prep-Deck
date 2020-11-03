@@ -21,14 +21,7 @@ let cloneQuestions;
 
 const BACKEND_URL = 'http:localhost:3000';
 
-
-document.addEventListener('DOMContentLoaded', () => {
-  console.log("DOM is Loaded");
-  fetchMain()
-})
-
-
-function fetchMain() {
+const fetchMain = () => {
   event.preventDefault()
 
   fetch(BACKEND_URL + `/decks/12`)
@@ -43,6 +36,13 @@ function fetchMain() {
       console.log(error.message)
     })
   }
+
+document.addEventListener('DOMContentLoaded', () => {
+  console.log("DOM is Loaded");
+  fetchMain()
+})
+
+
 
 //this function declaration is hoisted. this is available before this definition because it's hoisted. if changed to an expression it will only be 
 // available to code after 
@@ -93,7 +93,7 @@ lis.forEach(li => {
 
 
 
-function handleUserLogin(obj, form) {
+const handleUserLogin = (obj, form) => {
   form.style.display = "none"
   topArea.classList.add("hide")
   startButton.classList.remove("hide")
@@ -102,7 +102,7 @@ function handleUserLogin(obj, form) {
 }
 
 
-function createUser() {
+const createUser = () => {
     event.preventDefault();
   
     let formData = {
@@ -137,7 +137,7 @@ function createUser() {
 
 
 
-function loginUser() {
+const loginUser = () => {
   event.preventDefault();
 
   let formData = {
@@ -168,33 +168,33 @@ function loginUser() {
   
 }
   
-function addQuestionToDeck(event) {  // processes click on add button (makes patch req. to backend to update the deck with a question deck.questions << question )
+const handleError = (error) => {
+  if (typeof error.json === "function") {
+    error.json().then(jsonError => {
+        console.log(jsonError.exception);
+        alert("Question already in deck!")
+    }).catch(genericError => {
+        console.log("Generic error from API");
+        console.log(error.statusText);
+    });
+  } else {
+    console.log("Fetch error");
+    console.log(error);
+  }
+}
+
+function addQuestionToDeck(event) {  
   event.preventDefault()
   const deckId = event.target.dataset.id
   const questionId = questionDiv.dataset["id"]
 
   const configObj = {
       method: 'PATCH',
-      body: JSON.stringify({deck_id: deckId, question_id: questionId}), // have to send over question and deck data as json
-      headers: { // specify what kind of data I'm sending/receiving
+      body: JSON.stringify({deck_id: deckId, question_id: questionId}), 
+      headers: { 
           'Content-Type': 'application/json',
           'Accept': 'application/json'
       }
-  }
-
-  function handleError(error) {
-    if (typeof error.json === "function") {
-      error.json().then(jsonError => {
-          console.log(jsonError.exception);
-          alert("Question already in deck!")
-      }).catch(genericError => {
-          console.log("Generic error from API");
-          console.log(error.statusText);
-      });
-    } else {
-      console.log("Fetch error");
-      console.log(error);
-    }
   }
 
   fetch(BACKEND_URL + `/decks/${deckId}`, configObj)
@@ -208,13 +208,12 @@ function addQuestionToDeck(event) {  // processes click on add button (makes pat
         console.log("Success")
         alert("Success!")
         let userDeck = new Deck(deck_json)
-          //how to let user know question was added = message display from backend 
       })
       .catch(error => {
         handleError(error)
       })
-  
-}
+  }
+
 
 function removeQuestionFromDeck(event) {
   event.preventDefault()
@@ -293,8 +292,7 @@ function getNewQuestion(questions) {
 }
 
 
-function clearChoices(){
-  // choices.forEach(choice => choice.parentElement.classList.remove(answerClass))
+function clearChoices() {
   choices.forEach(choice => choice.parentElement.className = "choice-container")
   explanation.classList.add('hide')
   
@@ -311,7 +309,7 @@ function begin() {
   mainButton.disabled = true
   seeButton.classList.remove('hide')
   
-  nextButton.addEventListener('click', function(e) {
+  nextButton.addEventListener('click',  e =>  {
     clearChoices()
     getNewQuestion(cloneQuestions)
     
@@ -322,21 +320,21 @@ const myForm = document.getElementById('myForm');
 myForm.addEventListener('submit', createUser)
 
 const myLoginForm = document.getElementById('myLoginForm');
-myLoginForm.addEventListener('submit', function(event) {
+myLoginForm.addEventListener('submit',  e => {
   loginUser()
 })
 
-removeButton.addEventListener('click', function(e) {
+removeButton.addEventListener('click',  e => {
   removeQuestionFromDeck(e)
 })
 
 
-addButton.addEventListener('click', function(e) {
+addButton.addEventListener('click', e => {
   addQuestionToDeck(e)
 })
 
 
-seeButton.addEventListener('click', function(e) {
+seeButton.addEventListener('click',  e => {
   seeDeck()
   addButton.disabled = true
   removeButton.disabled = false
@@ -345,7 +343,7 @@ seeButton.addEventListener('click', function(e) {
 })
 
 
-mainButton.addEventListener('click', function(e){
+mainButton.addEventListener('click',  e => {
   startDeck()
   addButton.disabled = false
   removeButton.disabled = true
@@ -355,7 +353,7 @@ mainButton.addEventListener('click', function(e){
 })
 
 choices.forEach(choice => {
-  choice.addEventListener("click", function(e) {
+  choice.addEventListener("click", e => {
     if (acceptingAnswers) {
       acceptingAnswers = false
       const selectedAnswer = e.target 
