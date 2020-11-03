@@ -13,7 +13,7 @@ class User {
     
     renderUser() {
         let newUserP = document.createElement('p')
-        newUserP.innerText = `Hello, ${this.first_name}`
+        newUserP.innerText = `Welcome ${this.first_name}, let's see what you know.`
         seeButton.dataset["id"] = this.deck_id
         removeButton.dataset["id"] = this.deck_id
         addButton.dataset["id"] = this.deck_id

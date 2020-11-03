@@ -4,6 +4,7 @@
 }
 
 body {
+  display: flex;
   padding: 0;
   margin: 0;
   display: flex;
@@ -38,16 +39,25 @@ hr {
  
 }
 
+.instructions {
+  float: left;
+  color: rgb(201, 49, 133); 
+  width: 80%;
+  text-align: center;
+}
 
 .container {
+  float: left;
+  clear: left;
   width: 800px;
-  max-width: 60%;
+  max-width: 80%;
   background-color: whitesmoke;
   border-radius: 5px;
   padding: 16px;
   box-shadow: 0 0 10px 2px;
   
 }
+
 
 #user-display p {
   padding-bottom: .5em;

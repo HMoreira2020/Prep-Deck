@@ -97,6 +97,7 @@ function handleUserLogin(obj, form) {
   form.style.display = "none"
   topArea.classList.add("hide")
   startButton.classList.remove("hide")
+  document.querySelector("div.instructions").classList.remove("hide")
   obj.renderUser()
 }
 
