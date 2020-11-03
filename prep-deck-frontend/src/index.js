@@ -16,10 +16,7 @@ const questionContent2 = document.getElementById('question-content-2')
 const choices = Array.from(document.getElementsByClassName("choice-text")).slice(0,4)
 let currentQuestion = {} 
 let acceptingAnswers = false;
-let questionCounter = 0
-let availableQuestions = []
 let cloneQuestions;
-let answerClass;
 
 
 const BACKEND_URL = 'http:localhost:3000';
@@ -296,7 +293,8 @@ function getNewQuestion(questions) {
 
 
 function clearChoices(){
-  choices.forEach(choice => choice.parentElement.classList.remove(answerClass))
+  // choices.forEach(choice => choice.parentElement.classList.remove(answerClass))
+  choices.forEach(choice => choice.parentElement.className = "choice-container")
   explanation.classList.add('hide')
   
 }
@@ -362,7 +360,7 @@ choices.forEach(choice => {
       const selectedAnswer = e.target 
       const answerPrefix = selectedAnswer.previousElementSibling.innerHTML
 
-      answerClass = answerPrefix === currentQuestion.correct_answer ? "correct" : "incorrect"
+      let answerClass = answerPrefix === currentQuestion.correct_answer ? "correct" : "incorrect"
     
       selectedAnswer.parentElement.classList.add(answerClass)
   
