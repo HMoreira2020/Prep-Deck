@@ -9,7 +9,7 @@ const topArea = document.querySelector('ul.top-area')
 const header = document.querySelector('h1')
 const explanation = document.getElementById('explanation')
 const explanationContainer = document.getElementById('explanation-container')
-
+const topic = document.getElementById('topic')
 
 
 const deck = document.getElementById('deck')
@@ -136,7 +136,7 @@ function createUser() {
 //event listener on signup form to send data to users#create and create user
 //also hides sign in form and displays main prep deck 
 const myForm = document.getElementById('myForm');
-myForm.addEventListener('submit', createUser)
+// myForm.addEventListener('submit', createUser)
 
 
 function loginUser() {
@@ -310,8 +310,9 @@ function getNewQuestion(questions) {
     acceptingAnswers = true
     // availableQuestions = questions
   }
-  if (questions.length === 0) { //this works bc a q is spliced before this line 
+  if (questions.length == 0) { //this works bc a q is spliced before this line 
       nextButton.disabled = true
+      mainButton.disabled = false
   }
 }
 
@@ -362,6 +363,7 @@ function begin() {
   })
 }
 
+myForm.addEventListener('submit', createUser)
 
 
 startButton.addEventListener('click', begin)

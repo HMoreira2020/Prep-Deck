@@ -184,6 +184,10 @@ input[type=text], input[type=password] {
 
 }
 
+#topic {
+  text-align: center;
+}
+
 #question-content-2 {
   text-align: center;
   margin: auto;

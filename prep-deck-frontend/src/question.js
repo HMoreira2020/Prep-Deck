@@ -16,6 +16,7 @@ class Question {
 
     
     render() {
+      topic.innerHTML = `Topic: ${this.topic}`
       questionDiv.innerText = this.content
       questionDiv.dataset["id"] = this.id 
       questionContent2.innerText = this.content_2
