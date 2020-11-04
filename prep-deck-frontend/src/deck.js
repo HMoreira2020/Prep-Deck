@@ -10,6 +10,7 @@ class Deck {
 
     //deck.startDeck()
     startDeck() {
+        clearChoices()
         header.innerHTML = this.name
         mainButton.dataset["id"] = this.id
         let questions = this.questions.map(ques => new Question(ques))
@@ -20,6 +21,7 @@ class Deck {
 
 
     seeDeck() {
+        clearChoices()
         header.innerHTML = this.name
         let ids = this.questions.map(ques => ques.id)
         function filterById(id){return Question.findById(id)}

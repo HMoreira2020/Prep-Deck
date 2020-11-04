@@ -298,23 +298,7 @@ const clearChoices = () => {
   
 }
 
-function begin() {
-  event.target.classList.add('hide')
-  userDisplayDiv.classList.add('hide')
-  deck.classList.remove('hide')
-  nextButton.classList.remove('hide')
-  addButton.classList.remove('hide')
-  removeButton.classList.remove('hide')
-  mainButton.classList.remove('hide')
-  mainButton.disabled = true
-  seeButton.classList.remove('hide')
-  
-  nextButton.addEventListener('click',  e =>  {
-    clearChoices()
-    getNewQuestion(cloneQuestions)
-    
-  })
-}
+
 
 const myForm = document.getElementById('myForm');
 myForm.addEventListener('submit', createUser)
@@ -381,6 +365,23 @@ choices.forEach(choice => {
   })
 })
 
+function begin() {
+  event.target.classList.add('hide')
+  userDisplayDiv.classList.add('hide')
+  deck.classList.remove('hide')
+  nextButton.classList.remove('hide')
+  addButton.classList.remove('hide')
+  removeButton.classList.remove('hide')
+  mainButton.classList.remove('hide')
+  mainButton.disabled = true
+  seeButton.classList.remove('hide')
+  
+  nextButton.addEventListener('click',  e =>  {
+    clearChoices()
+    getNewQuestion(cloneQuestions)
+    
+  })
+}
 
 
 startButton.addEventListener('click', begin)

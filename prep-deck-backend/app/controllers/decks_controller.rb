@@ -2,12 +2,12 @@ class DecksController < ApplicationController
     before_action :set_deck, only: [:show, :update, :destroy]
     before_action :set_question, only: [:update, :destroy]
 
-    #Get /decks/9
-    def show
-        render json: DeckSerializer.new(@deck).to_serialized_json
-    end 
+  
+  def show
+      render json: DeckSerializer.new(@deck).to_serialized_json
+  end 
 
-     # PATCH/PUT /decks/9
+ 
   def update 
     question = Question.find(params[:question_id])
     @deck.questions << question
@@ -18,7 +18,6 @@ class DecksController < ApplicationController
     end 
   end
 
-  # Delete /decks/9
   def destroy
     if @deck.questions.include?(@question)
       @deck.questions.delete(@question)

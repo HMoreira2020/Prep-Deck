@@ -43,7 +43,7 @@ hr {
   float: left;
   color: rgb(201, 49, 133); 
   text-align: center;
-  margin-left: 1rem;
+  /* margin-left: .5rem; */
 }
 
 .container {

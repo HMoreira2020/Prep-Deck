@@ -14,8 +14,6 @@ class UsersController < ApplicationController
             # @token = encode_token(user_id: @user.id) #this arg is the 'payload' that we use to set the current_user 
             # render json: {@user, jwt: @token}, status: :created
             render json: UserSerializer.new(user).to_serialized_json, status: :created 
-            #possible render with user decks to grab on front end 
-            #add deck_id value to the value of add button 
         else
             render json: { errors: user.errors.full_messages }, status: :not_acceptable
         end
