@@ -292,7 +292,7 @@ function getNewQuestion(questions) {
 }
 
 
-function clearChoices() {
+const clearChoices = () => {
   choices.forEach(choice => choice.parentElement.className = "choice-container")
   explanation.classList.add('hide')
   
@@ -362,8 +362,18 @@ const checkAnswer = (event) => {
 
     explanation.classList.remove('hide')
     explanation.innerHTML = currentQuestion.explanation 
+    
+    if (answerPrefix !== currentQuestion.correct_answer) {
+      choices.forEach(choice => {
+        if (choice.previousElementSibling.innerHTML === currentQuestion.correct_answer) {
+          choice.parentElement.classList.add("correct")
+        }
+      })
+    }
   }
 }
+
+
 
 choices.forEach(choice => {
   choice.addEventListener("click", e => {
