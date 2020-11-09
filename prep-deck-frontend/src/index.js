@@ -274,6 +274,9 @@ function seeDeck() {
     deck.seeDeck() 
     nextButton.disabled = false 
    })
+   .catch(function(error) {
+    console.log(error.message)
+  })
 }
 
 
